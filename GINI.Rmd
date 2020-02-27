@@ -3,9 +3,7 @@ documentclass: book
 classoption: oneside
 title: "Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective"
 author: |
- | Lulu Jiang, Hai Fang
- |
- | University of Oxford
+ | Lulu Jiang (<lulu.jiang@dpag.ox.ac.uk>), Hai Fang (<23versify@gmail.com>)
 date: "`r Sys.Date()`"
 url: 'https\://luca0330.github.io/gini/'
 github-repo: "luca0330/gini"
@@ -75,7 +73,7 @@ q('no')
 ################################################
 
 ##########################
-https://23verse.github.io/gini/
+https://23verse.github.io/gini
 ##########################
 ## bookdown::render_book + bookdown::gitbook
 cd ~/Sites/SVN/github/gini
@@ -122,7 +120,7 @@ git push origin master
 
 # Alive (https://23verse.github.io)
 
-> **A project `https://github.com/23verse/gini/`**
+> **A project `https://github.com/23verse/gini`**
 
 # visit https://github.com/new (enter "gini" -> Initialize this repository with a README)
 ## https://github.com/23verse/gini/settings/access: add "hfang-bristol"
@@ -137,7 +135,7 @@ git commit -m 'Initial commit'
 git push origin master
 # visit https://github.com/23verse/gini/settings -> GitHub Pages (master branch)
 
-# Alive (https://23verse.github.io/gini/): Genetic Interaction Network Interpretation
+# Alive (https://23verse.github.io/gini): Genetic Interaction Network Interpretation
 ####################################################
 
 ```
@@ -272,7 +270,7 @@ gg + geom_polygon(data=df_hull,aes(x, y, group=modules, fill=modules),alpha=0.1)
 scale_fill_gradientn(colors=xColormap("ggplot2")(64), breaks=breaks) + guides(fill="none") -> gg
 ```
 
-> **Step 6. Label modules as a text layer, altogether shown.**
+> **Step 6. Label modules as a text layer, altogether shown in FIGURE \@ref(fig:1-module).**
 ```{r, echo=TRUE}
 # calculate the centre point coordinates for each of hulls/modules
 # done so by first grouping by modules
@@ -285,6 +283,13 @@ gg + geom_text_repel(data=df_centre, aes(x0, y0, label=modules)) -> gg
 
 # shown collectively by simply typing the object "gg"
 gg
+```
+
+```{r 1-module, fig.cap="Network visualisation of human genetic interactions respecting the modular structure.", fig.width=8, fig.height=8, echo=FALSE, eval=TRUE, fig.align="center",out.width="100%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.GINI.1-module.png")
+grid.raster(img)
 ```
 
 > **Step 7. Summarise the number of genes found in each module.**

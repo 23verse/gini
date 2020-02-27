@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3.1 Case 1 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective</title>
   <meta name="description" content="3.1 Case 1 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective." />
-  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3.1 Case 1 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-01-10" />
+<meta name="date" content="2020-02-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -225,7 +225,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb9-13" data-line-number="13">gg <span class="op">+</span><span class="st"> </span><span class="kw">geom_polygon</span>(<span class="dt">data=</span>df_hull,<span class="kw">aes</span>(x, y, <span class="dt">group=</span>modules, <span class="dt">fill=</span>modules),<span class="dt">alpha=</span><span class="fl">0.1</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb9-14" data-line-number="14"><span class="kw">scale_fill_gradientn</span>(<span class="dt">colors=</span><span class="kw">xColormap</span>(<span class="st">&quot;ggplot2&quot;</span>)(<span class="dv">64</span>), <span class="dt">breaks=</span>breaks) <span class="op">+</span><span class="st"> </span><span class="kw">guides</span>(<span class="dt">fill=</span><span class="st">&quot;none&quot;</span>) -&gt;<span class="st"> </span>gg</a></code></pre></div>
 <blockquote>
-<p><strong>Step 6. Label modules as a text layer, altogether shown.</strong></p>
+<p><strong>Step 6. Label modules as a text layer, altogether shown in FIGURE <a href="case-1.html#fig:1-module">1.1</a>.</strong></p>
 </blockquote>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># calculate the centre point coordinates for each of hulls/modules</span></a>
 <a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co"># done so by first grouping by modules</span></a>
@@ -238,6 +238,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb10-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb10-10" data-line-number="10"><span class="co"># shown collectively by simply typing the object &quot;gg&quot;</span></a>
 <a class="sourceLine" id="cb10-11" data-line-number="11">gg</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:1-module"></span>
+<img src="GINI_files/figure-html/1-module-1.png" alt="Network visualisation of human genetic interactions respecting the modular structure." width="100%" />
+<p class="caption">
+FIGURE 1.1: Network visualisation of human genetic interactions respecting the modular structure.
+</p>
+</div>
 <blockquote>
 <p><strong>Step 7. Summarise the number of genes found in each module.</strong></p>
 </blockquote>
@@ -356,7 +362,7 @@ gitbook.start({
 "all": ["facebook", "github", "twitter", "linkedin", "weibo", "instapaper", "vk"]
 },
 "fontsettings": {
-"theme": "sepia",
+"theme": "white",
 "family": "sans",
 "size": 2
 },

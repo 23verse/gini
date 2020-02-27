@@ -15,7 +15,7 @@ bookdown::gitbook:
     search: no
     edit: null
     fontsettings:
-      theme: sepia
+      theme: white
       family: sans
       size: 2
     download: no

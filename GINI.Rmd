@@ -183,6 +183,7 @@ ig.BioGRID_genetic
 ```
 
 > **Gene expression**
+
 We obtained human tissue RNA-seq datasets (gene-centric expression level quantified as transcripts per million [TPM]) in the `GTEx` study (version 8). This study recruited ~1000 postmortem donors from which 49 tissues (each tissue with at least 70 donors/samples) were profiled using bulk RNA-seq. To aid in selecting tissue-specific expressed genes and their expression distribution within a tissue, we precalculated descriptive summary for each gene per tissue: ymin (the minimum TPM amongst the same tissue samples), lower (25% quantile), middle (i.e. median), upper (75% quantile) and ymax (the maximum TPM). This per-tissue gene summary data was represented as a `tibble` object (using the `tibble` package) and saved as an RData file `GTEx_V8_TPM_boxplot.RData`. Doing so this dataset, though much reduced in size, is still informative for further extraction of genes expressed in a tissue (filtering by `ymin >= 1`) and for boxplot visualisation of expression distribution. 
 
 ```{r, eval=T, echo=T}

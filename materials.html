@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="index.html"/>
-<link rel="next" href="r-and-packages.html"/>
+<link rel="next" href="methods.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -130,11 +130,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Overview</a></li>
-<li class="chapter" data-level="2" data-path="materials.html"><a href="materials.html"><i class="fa fa-check"></i><b>2</b> Materials</a><ul>
-<li class="chapter" data-level="2.1" data-path="r-and-packages.html"><a href="r-and-packages.html"><i class="fa fa-check"></i><b>2.1</b> R and packages</a></li>
-<li class="chapter" data-level="2.2" data-path="genetic-interactions.html"><a href="genetic-interactions.html"><i class="fa fa-check"></i><b>2.2</b> Genetic interactions</a></li>
-<li class="chapter" data-level="2.3" data-path="gene-expression.html"><a href="gene-expression.html"><i class="fa fa-check"></i><b>2.3</b> Gene expression</a></li>
-</ul></li>
+<li class="chapter" data-level="2" data-path="materials.html"><a href="materials.html"><i class="fa fa-check"></i><b>2</b> Materials</a></li>
 <li class="chapter" data-level="3" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>3</b> Methods</a><ul>
 <li class="chapter" data-level="3.1" data-path="case-1.html"><a href="case-1.html"><i class="fa fa-check"></i><b>3.1</b> Case 1</a></li>
 <li class="chapter" data-level="3.2" data-path="case-2.html"><a href="case-2.html"><i class="fa fa-check"></i><b>3.2</b> Case 2</a></li>
@@ -162,7 +158,64 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="materials" class="section level1">
-<h1><span class="header-section-number">Section 2</span> Materials</h1> 
+<h1><span class="header-section-number">Section 2</span> Materials</h1>
+<blockquote>
+<p><strong>R and packages</strong></p>
+</blockquote>
+<p>At the time of writing, the most recent version of R is 3.6.2 (Dark and Stormy Night). The instructions of how to install R in different platforms (Linux, OS X and Windows) can be found at <a href="https://www.r-project.org" class="uri">https://www.r-project.org</a> where precompiled binaries are provided for download. For Linux users who do not have a <code>sudo</code> privilege, R could be installed from the source code at the home directory (that is, <code>$HOME</code>):</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">wget https<span class="op">:</span><span class="er">//</span>cran.wu.ac.at<span class="op">/</span>src<span class="op">/</span>base<span class="op">/</span>R<span class="dv">-3</span><span class="op">/</span>R<span class="dv">-3</span>.<span class="dv">6</span>.<span class="fl">2.</span>tar.gz</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">tar xvfz R<span class="dv">-3</span>.<span class="dv">6</span>.<span class="fl">2.</span>tar.gz</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">cd R<span class="dv">-3</span>.<span class="fl">6.2</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">.<span class="op">/</span>configure <span class="op">--</span>prefix=<span class="er">$</span>HOME<span class="op">/</span>R<span class="dv">-3</span>.<span class="fl">6.2</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">make</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">make check</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">make install</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="op">$</span>HOME<span class="op">/</span>R<span class="dv">-3</span>.<span class="fl">6.2</span><span class="op">/</span>bin<span class="op">/</span>R <span class="co"># start R</span></a></code></pre></div>
+<p>We highly recommend using a dedicated package <code>BiocManager</code> to install and update any packages that have been deposited into <code>Bioconductor</code> and <code>CRAN</code>, two repositories that are exclusive to each other so that a package cannot be deposited into both. <code>BiocManager</code> should be installed first in a conventional way (i.e. using the function <code>install.packages</code>), and then can be used to install other packages in a single step. Once an additional package <code>remotes</code> also installed, <code>BiocManager</code> can be also used to install packages hosted at <code>GitHub</code>, usually as a development repository prior to submission into <code>Bioconductor</code> or <code>CRAN</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># first, install the package BiocManager</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">install.packages</span>(<span class="st">&quot;BiocManager&quot;</span>)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co"># then install packages from Bioconductor and CRAN</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="kw">c</span>(<span class="st">&quot;biobroom&quot;</span>,<span class="st">&quot;dnet&quot;</span>,<span class="st">&quot;ggrepel&quot;</span>,<span class="st">&quot;gridExtra&quot;</span>,<span class="st">&quot;limma&quot;</span>,<span class="st">&quot;patchwork&quot;</span>,<span class="st">&quot;remotes&quot;</span>,<span class="st">&quot;tidyverse&quot;</span>,<span class="st">&quot;XGR&quot;</span>), <span class="dt">dependencies=</span>T)</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co"># can also install packages from GitHub</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">&quot;centerforopenscience/osfr&quot;</span>)</a></code></pre></div>
+<blockquote>
+<p><strong>Genetic interactions</strong></p>
+</blockquote>
+<p>We extracted human genetic interactions from <code>BioGRID</code> (version 3.5.179) involving 3102 genes (mapped to NCBI GeneID; the same hereinafter) and their 7856 interactions. This dataset was preprocessed into an <code>igraph</code> object (using the <code>igraph</code> package), saved as an RData-formatted file <code>ig.BioGRID_genetic.RData</code>, deposited at <code>https://osf.io/gskpn</code>).</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">ig.BioGRID_genetic</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">## IGRAPH 0a7230a UN-- 3102 7856 -- </span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">## + attr: name (v/c), geneid (v/n), symbol (v/c), description (v/c),</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">## | nPMID (e/n)</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">## + edges from 0a7230a (vertex names):</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">##  [1] A1BG  --REV3L   A2M   --KRAS    AAGAB --TP53    AAMP  --KRAS   </span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">##  [5] AANAT --P2RY6   AANAT --SPHK1   AANAT --SSTR5   AANAT --TOP1   </span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">##  [9] AARS2 --LEO1    AARS2 --MRPS16  AARS2 --MRPS5   AARS2 --PSMB6  </span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">## [13] AATF  --DONSON  AATF  --GFI1B   AATF  --MCM3AP  ABCB5 --CSK    </span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">## [17] ABCB5 --KRAS    ABCB7 --AURKA   ABCB7 --HSCB    ABCB7 --LONP1  </span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">## [21] ABCB7 --MBTPS2  ABCB7 --MED23   ABCB7 --NUBP1   ABCB7 --PITRM1 </span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">## [25] ABCB7 --TAF2    ABCE1 --KRAS    ABCG2 --CSK     ABCG5 --FLT3   </span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">## + ... omitted several edges</span></a></code></pre></div>
+<blockquote>
+<p><strong>Gene expression</strong>
+We obtained human tissue RNA-seq datasets (gene-centric expression level quantified as transcripts per million [TPM]) in the <code>GTEx</code> study (version 8). This study recruited ~1000 postmortem donors from which 49 tissues (each tissue with at least 70 donors/samples) were profiled using bulk RNA-seq. To aid in selecting tissue-specific expressed genes and their expression distribution within a tissue, we precalculated descriptive summary for each gene per tissue: ymin (the minimum TPM amongst the same tissue samples), lower (25% quantile), middle (i.e. median), upper (75% quantile) and ymax (the maximum TPM). This per-tissue gene summary data was represented as a <code>tibble</code> object (using the <code>tibble</code> package) and saved as an RData file <code>GTEx_V8_TPM_boxplot.RData</code>. Doing so this dataset, though much reduced in size, is still informative for further extraction of genes expressed in a tissue (filtering by <code>ymin &gt;= 1</code>) and for boxplot visualisation of expression distribution.</p>
+</blockquote>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">GTEx_V8_TPM_boxplot</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">## # A tibble: 1,709,316 x 9</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">##    ENSG       Symbol  SMTSD           SMTS      ymin lower middle   upper   ymax</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">##    &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;           &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">##  1 ENSG00000… DDX11L1 Adipose - Subc… Adipose…     0     0      0 0       0.166 </span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">##  2 ENSG00000… DDX11L1 Muscle - Skele… Muscle       0     0      0 0.0150  0.116 </span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">##  3 ENSG00000… DDX11L1 Artery - Tibial Blood V…     0     0      0 0       0.130 </span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">##  4 ENSG00000… DDX11L1 Artery - Coron… Blood V…     0     0      0 0       0.0710</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">##  5 ENSG00000… DDX11L1 Heart - Atrial… Heart        0     0      0 0.0143  0.138 </span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">##  6 ENSG00000… DDX11L1 Adipose - Visc… Adipose…     0     0      0 0       0.127 </span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">##  7 ENSG00000… DDX11L1 Uterus          Uterus       0     0      0 0.0244  0.148 </span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">##  8 ENSG00000… DDX11L1 Vagina          Vagina       0     0      0 0.0202  0.118 </span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">##  9 ENSG00000… DDX11L1 Breast - Mamma… Breast       0     0      0 0.00493 0.0744</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">## 10 ENSG00000… DDX11L1 Skin - Not Sun… Skin         0     0      0 0       0.114 </span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">## # … with 1,709,306 more rows</span></a></code></pre></div>
 </div>
             </section>
 
@@ -170,7 +223,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="r-and-packages.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="methods.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

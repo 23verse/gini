@@ -146,7 +146,7 @@ We describe three showcases analysing human genetic interactions and/or gene exp
 
 # Materials
 
-## R and packages
+> **R and packages**
 
 At the time of writing, the most recent version of R is 3.6.2 (Dark and Stormy Night). The instructions of how to install R in different platforms (Linux, OS X and Windows) can be found at https://www.r-project.org where precompiled binaries are provided for download. For Linux users who do not have a `sudo` privilege, R could be installed from the source code at the home directory (that is, `$HOME`):
 
@@ -174,7 +174,7 @@ BiocManager::install(c("biobroom","dnet","ggrepel","gridExtra","limma","patchwor
 BiocManager::install("centerforopenscience/osfr")
 ```
 
-## Genetic interactions
+> **Genetic interactions**
 
 We extracted human genetic interactions from `BioGRID` (version 3.5.179) involving 3102 genes (mapped to NCBI GeneID; the same hereinafter) and their 7856 interactions. This dataset was preprocessed into an `igraph` object (using the `igraph` package), saved as an RData-formatted file `ig.BioGRID_genetic.RData`, deposited at `https://osf.io/gskpn`). 
 
@@ -182,7 +182,7 @@ We extracted human genetic interactions from `BioGRID` (version 3.5.179) involvi
 ig.BioGRID_genetic
 ```
 
-## Gene expression
+> **Gene expression**
 We obtained human tissue RNA-seq datasets (gene-centric expression level quantified as transcripts per million [TPM]) in the `GTEx` study (version 8). This study recruited ~1000 postmortem donors from which 49 tissues (each tissue with at least 70 donors/samples) were profiled using bulk RNA-seq. To aid in selecting tissue-specific expressed genes and their expression distribution within a tissue, we precalculated descriptive summary for each gene per tissue: ymin (the minimum TPM amongst the same tissue samples), lower (25% quantile), middle (i.e. median), upper (75% quantile) and ymax (the maximum TPM). This per-tissue gene summary data was represented as a `tibble` object (using the `tibble` package) and saved as an RData file `GTEx_V8_TPM_boxplot.RData`. Doing so this dataset, though much reduced in size, is still informative for further extraction of genes expressed in a tissue (filtering by `ymin >= 1`) and for boxplot visualisation of expression distribution. 
 
 ```{r, eval=T, echo=T}

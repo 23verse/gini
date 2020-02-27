@@ -1,0 +1,779 @@
+---
+documentclass: book
+classoption: oneside
+title: "Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective"
+author: |
+ | Lulu Jiang, Hai Fang
+ |
+ | University of Oxford
+date: "`r Sys.Date()`"
+url: 'https\://luca0330.github.io/gini/'
+github-repo: "luca0330/gini"
+cover-image: "cover.png"
+description: "Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective."
+vignette: >
+ %\VignetteIndexEntry{GINI Booklet}
+ %\VignetteEngine{knitr::rmarkdown}
+ %\VignetteEncoding{UTF-8}
+output: 
+  BiocStyle::html_document:
+        toc: true
+        toc_depth: 3
+        number_sections: true
+        theme: journal
+        highlight: monochrome
+        toc_float: true
+        code_folding: hide
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(collapse=TRUE, comment="##")
+knitr::opts_chunk$set(dpi=300)
+knitr::opts_chunk$set(cache=FALSE)
+knitr::opts_chunk$set(echo=TRUE)
+knitr::opts_chunk$set(warning=FALSE)
+knitr::opts_chunk$set(message=FALSE)
+knitr::opts_chunk$set(fig_cap="yes")
+knitr::opts_chunk$set(eval=F)
+```
+
+```{r, eval=FALSE, echo=FALSE}
+cd ~/Sites/XGR/MIMB/BOOKLET
+################################################
+R
+## load
+load("now.GINI_booklet.RData")
+
+library(XGR)
+RData.location <- "~/Sites/SVN/github/bigdata_dev"
+ig.BioGRID_genetic <- xRDataLoader("ig.BioGRID_genetic", RData.location=RData.location)
+GTEx_V8_TPM_boxplot <- xRDataLoader("GTEx_V8_TPM_boxplot", RData.location=RData.location)
+
+## save
+res <- sapply(ls(), xObjSize, units="Mb")
+items <- setdiff(ls(), c("img","crosslink.customised"))
+if(0){
+	ls_tmp <- lapply(items, function(x){
+		message(sprintf("%s (%s) ...", x, as.character(Sys.time())), appendLF=T)
+		save(list=x, file="now.GINI_booklet.RData", compress="xz")
+	})
+}
+save(list=items, file="now.GINI_booklet.RData", compress="xz")
+
+# https://bookdown.org/yihui/rmarkdown/html-document.html
+# https://bootswatch.com/3/
+###############
+BiocManager::install(c("bookdown"))
+###############
+
+## bookdown::render_book + bookdown::gitbook
+## use configuration in '_output.yml' and '_bookdown.yml'
+bookdown::render_book("now.GINI_booklet.Rmd", c("bookdown::gitbook","bookdown::pdf_book","bookdown::tufte_html_book")[1])
+
+q('no')
+
+################################################
+
+##########################
+https://23verse.github.io/gini/
+##########################
+## bookdown::render_book + bookdown::gitbook
+cd ~/Sites/SVN/github/gini
+# delete previous *.html *.png *.css *.js *.ttf *.Rmd files *.yml files
+find ./ -type f -name '*.html' -o -type f -name '*.png' -o -type f -name '*.css' -o -type f -name '*.js' -o -type f -name '*.ttf' -o -type f -name '*.Rmd' -o -type f -name '*.yml' | xargs rm -rf
+# copy the whole package from ~/Sites/XGR/MIMB/BOOKLET/GINIgitbook to ~/Sites/SVN/github/gini
+cp -rf ~/Sites/XGR/MIMB/BOOKLET/GINIgitbook/* ./
+# copy/rename ~/Sites/XGR/MIMB/BOOKLET/now.GINI_booklet.Rmd to ~/Sites/SVN/github/gini/index.Rmd
+cp -rf ~/Sites/XGR/MIMB/BOOKLET/now.GINI_booklet.Rmd ./GINI.Rmd
+cp -rf ~/Sites/XGR/MIMB/BOOKLET/_bookdown.yml ./_bookdown.yml
+cp -rf ~/Sites/XGR/MIMB/BOOKLET/_output.yml ./_output.yml
+cp -rf ~/Sites/XGR/MIMB/BOOKLET/now.cover.png ./cover.png
+# add new *.html *.png *.css *.js *.ttf *.Rmd *.yml files
+git status | grep 'modified' | awk '{print $2}' | xargs git add
+git status | grep 'deleted' | awk '{print $2}' | xargs git rm
+find ./ -type f -name '*.html' -o -type f -name '*.png' -o -type f -name '*.css' -o -type f -name '*.js' -o -type f -name '*.ttf' -o -type f -name '*.Rmd' -o -type f -name '*.yml' | xargs git add
+git add --all
+git commit -m 'Update gini'
+git push origin master
+##########################
+
+cd ~/Sites/XGR/MIMB
+/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py -o GINI_Figures.pdf Figure1.ai Figure2.ai Figure3.ai Figure4.ai Figure5.ai Figure6.ai Figure7.ai Figure8.ai Figure9.ai Figure10.ai
+
+
+####################################################
+## GitHub Pages
+
+One site per account but unlimited projects can be created from https://pages.github.com:
+
+> **One site `https://github.com/23verse/23verse.github.io`**
+
+# visit https://github.com/new (enter "23verse.github.io" -> Initialize this repository with a README)
+# clone into the local machine 
+cd ~/Sites/SVN/github
+git clone git@github.com:23verse/23verse.github.io
+cd ~/Sites/SVN/github/23verse.github.io
+git pull origin master
+## https://github.com/23verse/23verse.github.io/settings/access: add "hfang-bristol"
+echo "Hello 23verse" > index.html
+git add --all
+git commit -m 'Initial commit'
+git push origin master
+
+# Alive (https://23verse.github.io)
+
+> **A project `https://github.com/23verse/gini/`**
+
+# visit https://github.com/new (enter "gini" -> Initialize this repository with a README)
+## https://github.com/23verse/gini/settings/access: add "hfang-bristol"
+# clone into the local machine 
+cd ~/Sites/SVN/github
+git clone git@github.com:23verse/gini.git
+cd ~/Sites/SVN/github/gini
+git pull origin master
+echo "Hello gini" > index.html
+git add --all
+git commit -m 'Initial commit'
+git push origin master
+# visit https://github.com/23verse/gini/settings -> GitHub Pages (master branch)
+
+# Alive (https://23verse.github.io/gini/): Genetic Interaction Network Interpretation
+####################################################
+
+```
+
+# Overview {#index}
+
+We describe three showcases analysing human genetic interactions and/or gene expression data in human tissues. All done exclusively using R one-liner, defined as a sequential pipeline of elementary functions chained together achieving a complex task. We will guide the users through step-by-step instructions on (case 1) how to identify, visualize and interpret network modules of genetic interactions; (case 2) how to identify and interpret tissue-specific genetic interactions; and (case 3) how to carry out genetic interaction-based tissue clustering and differential interaction analysis. All three showcases are producible on its own right, achieved in relatively short runtime (~20 min for case 1, ~15 min for case 2, and ~25 min for case 3). We encourage the users to run through demos first before analysing their own datasets.
+
+# Materials
+
+## R and packages
+
+At the time of writing, the most recent version of R is 3.6.2 (Dark and Stormy Night). The instructions of how to install R in different platforms (Linux, OS X and Windows) can be found at https://www.r-project.org where precompiled binaries are provided for download. For Linux users who do not have a `sudo` privilege, R could be installed from the source code at the home directory (that is, `$HOME`):
+
+```{r, echo=TRUE}
+wget https://cran.wu.ac.at/src/base/R-3/R-3.6.2.tar.gz
+tar xvfz R-3.6.2.tar.gz
+cd R-3.6.2
+./configure --prefix=$HOME/R-3.6.2
+make
+make check
+make install
+$HOME/R-3.6.2/bin/R # start R
+```
+
+We highly recommend using a dedicated package `BiocManager` to install and update any packages that have been deposited into `Bioconductor` and `CRAN`, two repositories that are exclusive to each other so that a package cannot be deposited into both. `BiocManager` should be installed first in a conventional way (i.e. using the function `install.packages`), and then can be used to install other packages in a single step. Once an additional package `remotes` also installed, `BiocManager` can be also used to install packages hosted at `GitHub`, usually as a development repository prior to submission into `Bioconductor` or `CRAN`.
+
+```{r, echo=TRUE}
+# first, install the package BiocManager
+install.packages("BiocManager")
+
+# then install packages from Bioconductor and CRAN
+BiocManager::install(c("biobroom","dnet","ggrepel","gridExtra","limma","patchwork","remotes","tidyverse","XGR"), dependencies=T)
+
+# can also install packages from GitHub
+BiocManager::install("centerforopenscience/osfr")
+```
+
+## Genetic interactions
+
+We extracted human genetic interactions from `BioGRID` (version 3.5.179) involving 3102 genes (mapped to NCBI GeneID; the same hereinafter) and their 7856 interactions. This dataset was preprocessed into an `igraph` object (using the `igraph` package), saved as an RData-formatted file `ig.BioGRID_genetic.RData`, deposited at `https://osf.io/gskpn`). 
+
+```{r, eval=T, echo=T}
+ig.BioGRID_genetic
+```
+
+## Gene expression
+We obtained human tissue RNA-seq datasets (gene-centric expression level quantified as transcripts per million [TPM]) in the `GTEx` study (version 8). This study recruited ~1000 postmortem donors from which 49 tissues (each tissue with at least 70 donors/samples) were profiled using bulk RNA-seq. To aid in selecting tissue-specific expressed genes and their expression distribution within a tissue, we precalculated descriptive summary for each gene per tissue: ymin (the minimum TPM amongst the same tissue samples), lower (25% quantile), middle (i.e. median), upper (75% quantile) and ymax (the maximum TPM). This per-tissue gene summary data was represented as a `tibble` object (using the `tibble` package) and saved as an RData file `GTEx_V8_TPM_boxplot.RData`. Doing so this dataset, though much reduced in size, is still informative for further extraction of genes expressed in a tissue (filtering by `ymin >= 1`) and for boxplot visualisation of expression distribution. 
+
+```{r, eval=T, echo=T}
+GTEx_V8_TPM_boxplot
+```
+
+# Methods
+
+## Case 1
+
+We provide the step-by-step instructions on how to identify modular/community structure (`Step 2`), the essential to subsequently interpret the genetic interaction network, both visually intuitive and scientifically sound. `Steps 3-6` detail how to determine 2D coordinates of the network respecting modular structure, and how to add the hull and labelling for each of the modules, while `Steps 7-12` show how to perform pathway analysis of modules for knowledge discovery and interpretation.
+
+> **Step 1: Load the packages and import human genetic interaction data (see `Materials` above).**
+
+```{r, eval=F, include=TRUE}
+# load packages used in this case
+library(tidyverse)
+library(dnet)
+library(XGR)
+library(ggrepel)
+
+# also load the package "osfr" aided in importing data from https://osf.io/gskpn
+library(osfr)
+guid <- "gskpn"
+
+# import the genetic interaction network data
+ig.BioGRID_genetic <- xRDataLoader("ig.BioGRID_genetic", guid=guid)
+
+# keep the largest interconnected component
+# return an igraph object called "ig"
+ig.BioGRID_genetic %>% dNetInduce(nodes_query=V(ig.BioGRID_genetic)$name) -> ig
+```
+
+```{r, eval=TRUE, echo=FALSE}
+# This intends to use the local version of data
+RData.location <- "http://galahad.well.ox.ac.uk/bigdata"
+RData.location <- "~/Sites/SVN/github/bigdata_dev"
+```
+
+> **Step 2: Identify modular structure using the multi-level modularity optimisation algorithm.**
+
+```{r, echo=TRUE}
+# the object "ig" appended with a node attribute "modules"
+ig %>% cluster_louvain() %>% membership() -> V(ig)$modules
+```
+
+> **Step 3: Determine 2D coordinates for nodes, initialised within a module (using the `Kamada-Kawai layout` algorithm) and then adjusted considering between-module relations (via the `diffusion-limited aggregation` algorithm).**
+
+```{r, echo=TRUE}
+# the object "ig" appended with two node attributes "xcoord" and "ycoord"
+# and an edge attribute "color"
+ig %>% xAddCoords("modules") -> ig
+```
+
+> **Step 4: Visualise the network respecting modular structure.**
+
+```{r, echo=TRUE}
+# nodes placed by coordinates
+# nodes colored by modules using the color scheme "ggplot2"
+# edges colored differently within a module and between modules
+# colorbar hidden
+# return a ggplot object "gg"
+ig %>% xGGnetwork(node.xcoord="xcoord", node.ycoord="ycoord", node.color="modules", colormap="ggplot2", node.color.alpha=0.5, node.size.range=0.3, edge.color="color", edge.arrow.gap=0) + guides(color="none") -> gg
+
+# make node colors discrete with colorbar hidden
+breaks <- seq(1, n_distinct(V(ig)$modules))
+gg + scale_colour_gradientn(colors=xColormap("ggplot2")(64), breaks=breaks) -> gg
+```
+
+> **Step 5. Compute the hull for nodes per module that is added as a polygon layer.**
+```{r, echo=TRUE}
+# data for nodes extracted from the object "gg"
+# data nested by the column "modules"
+# apply the function "chull" to the nested data per module
+# results unnested to obtain the coordinates for hull points per module
+# edges colored differently within a module and between modules
+# return a tibble "df_hull"
+gg$data_nodes %>% nest(data=-modules) %>% 
+mutate(res=map(data,~slice(.x, chull(.x$x,.x$y)))) %>% 
+unnest(res) %>% select(modules, x, y) -> df_hull
+
+# the object "gg" added with a polygon layer
+# hull colored using the color scheme "ggplot2" with the colorbar hidden
+gg + geom_polygon(data=df_hull,aes(x, y, group=modules, fill=modules),alpha=0.1) +
+scale_fill_gradientn(colors=xColormap("ggplot2")(64), breaks=breaks) + guides(fill="none") -> gg
+```
+
+> **Step 6. Label modules as a text layer, altogether shown.**
+```{r, echo=TRUE}
+# calculate the centre point coordinates for each of hulls/modules
+# done so by first grouping by modules
+# then being summarised into the median point of nodes for each of hulls
+# return a tibble "df_centre"
+df_hull %>% group_by(modules) %>% summarise(x0=median(x), y0=median(y))-> df_centre
+
+# the object "gg" added with a text layer
+gg + geom_text_repel(data=df_centre, aes(x0, y0, label=modules)) -> gg
+
+# shown collectively by simply typing the object "gg"
+gg
+```
+
+> **Step 7. Summarise the number of genes found in each module.**
+```{r, echo=TRUE}
+# extract the number of genes per module
+ig %>% igraph::as_data_frame("vertices") %>% count(modules) -> data
+
+# modules sorted by gene numbers, converted into a factor type 
+data %>% arrange(desc(n)) %>% mutate(modules=modules %>% as.character() %>% fct_inorder()) -> data
+
+# draw the bar plot
+data %>% ggplot(aes(modules,n)) + geom_bar(stat="identity", fill="steelblue") + scale_y_log10(limits=c(1,1000)) + coord_flip() + theme_minimal()
+```
+
+> **Step 8. Perform pathway enrichment analysis for genes in each module.**
+```{r, echo=TRUE}
+# extract genes per module
+ig %>% igraph::as_data_frame("vertices") %>% select(symbol, modules) %>% arrange(modules) -> df
+
+# define the test background
+df %>% pull(symbol) -> background
+
+# perform enrichment analysis using KEGG environmental process pathways
+# Fisher's exact test used by default
+# return a tibble "df_nested" with the list-column "eTerm" for enrichment results
+# each contains an eTerm object if found, NULL otherwise
+df %>% nest(data=-modules) %>% mutate(eTerm=map(data, ~xEnricherGenes(.x$symbol, background=background, ontology="KEGGenvironmental", guid=guid))) -> df_nested
+
+# the tibble "df_nested" with rows/modules filtered out if NULL
+df_nested %>% filter(map_lgl(eTerm, ~!is.null(.x))) -> df_nested
+
+# the tibble "df_nested" appended with two list-columns 
+# the list-column "forest" for forest plot and "ladder" for ladder plot
+# both plots as a ggplot object
+df_nested %>% 
+mutate(forest=map(eTerm, ~xEnrichForest(.x))) %>% 
+mutate(ladder=map(eTerm, ~xEnrichLadder(.x))) -> df_nested
+
+# print the content of the tibble "df_nested"
+df_nested
+```
+
+> **Step 9. Explore enrichment results for a module.**
+```{r, echo=TRUE}
+# print the content of the eTerm object for module 3
+# note: the 2nd row of the tibble "df_nested"
+df_nested$eTerm[[2]]
+
+# visualise as a forest plot for module 3
+df_nested$forest[[2]]
+
+# visualise as a dot plot for module 3
+df_nested$ladder[[2]]
+```
+
+> **Step 10. Prepare the output for all modules.**
+```{r, echo=TRUE}
+# the tibble "df_nested" appended with the list-column "output"
+# each entry in this list-column is a conventional data frame
+df_nested %>% mutate(output=map(eTerm, ~xEnrichViewer(.x, "all"))) -> df_nested
+
+# print the content of the updated tibble "df_nested"
+df_nested
+
+# the tibble "df_nested" unnested into a tibble "df_output"
+df_nested %>% select(modules, output) %>% unnest(output) -> df_output
+
+# print the content of the tibble "df_nested"
+df_output
+```
+
+> **Step 11. Output enrichment results into a file `output.txt`.**
+```{r, echo=TRUE}
+# write into a text file "output.txt" in the R working directory
+df_output %>% write_delim("output.txt", delim="\t")
+```
+
+> **Step 12. Visualise and compare enrichment results between modules.**
+```{r, echo=TRUE}
+# rename the column "modules" into "group" in the tibble "df_output"
+df_output %>% rename(group=modules) %>% as.data.frame() -> df_output
+
+# forest plot of up to top 5 pathways enriched (FDR<0.05 and CI>1) per module
+# return a ggplot object "gg_forest"
+df_output %>% xEnrichForest(top_num=5, CI.one=F, drop=T, zlim=c(0,20)) -> gg_forest
+gg_forest
+
+# chord plot of pathways (the left-half) enriched in modules (right-half)
+# up to top 5 pathways (FDR<0.05) per module shown
+# note: the gap/angle between two halves controlled by the argument "big.gap"
+df_output %>% xEnrichChord(top_num=5, legend=F, text.size=0.4, big.gap=90)
+```
+
+
+## Case 2
+
+We illustrate how to perform integrative analysis combining genetic interactions with gene expression data; such strategy is computationally promising given the current technological limits in experimentally generating tissue-specific interactions on a genome scale, particularly for humans. One way doing so is to trim the generic genetic interactions to node genes expressed in a specific tissue. Such trimming allows identification of a genetic interaction network in the whole blood (`Step 2`), from which a subnetwork with a desired number of interconnected genes is further identified that tend to be highly expressed (`Step 3`). We also demonstrate how to highlight the subnetwork within the parent network (`Step 4`). For the interpretation of the subnetwork identified, we illustrate how to perform phenotype enrichment analysis using mammalian phenotype ontology, a tree-like structure containing well-defined terms that are used to annotate mouse knock-out phenotypes (`Step 6`). 
+
+> **Step 1: Load the packages and import human genetic interaction data as well as gene expression data (see `Materials`).**
+
+```{r, eval=F, include=TRUE}
+# load packages used in this case
+library(tidyverse)
+library(XGR)
+library(ggrepel)
+
+# also load the package "osfr" aided in importing data from https://osf.io/gskpn
+library(osfr)
+guid <- "gskpn"
+
+# import genetic interaction data
+# converted into two tibbles "vertices" and "edges"
+ig.BioGRID_genetic <- xRDataLoader("ig.BioGRID_genetic", guid=guid)
+ig.BioGRID_genetic %>% igraph::as_data_frame("vertices") %>% as_tibble() -> vertices
+ig.BioGRID_genetic %>% igraph::as_data_frame("edges") %>% as_tibble() -> edges
+
+# import gene expression data
+GTEx_V8_TPM_boxplot <- xRDataLoader("GTEx_V8_TPM_boxplot", guid=guid)
+```
+
+> **Step 2. Identify a genetic interaction network in the whole blood.**
+
+```{r, echo=TRUE}
+# extract genes expressed in the whole blood (TPM>=1 in all samples analysed)
+# also extract median TPM among all blood samples
+# stored in a tibble "df_blood"
+GTEx_V8_TPM_boxplot %>% filter(SMTSD=="Whole Blood", ymin>=1) %>% 
+select(Symbol,middle) -> df_blood
+
+# trim the genetic interactions to node genes expressed
+# return two data frames "nodes" and "links"
+# return an igraph object "ig_blood"
+edges %>% semi_join(df_blood, by=c("from"="Symbol")) %>% 
+semi_join(df_blood, by=c("to"="Symbol")) %>% as.data.frame() -> links
+vertices %>% inner_join(df_blood, by=c("name"="Symbol")) %>% 
+rename(TPM=middle) %>% as.data.frame() -> vertices
+ig_blood <- igraph::graph_from_data_frame(d=links, directed=F, vertices=vertices)
+
+# calculate coordinates using the Fruchterman-Reingold layout algorithm
+# the object "ig_blood" appended with two node attributes "xcoord" and "ycoord" 
+ig_blood %>% xLayout("gplot.layout.fruchtermanreingold") -> ig_blood
+
+# calculate node degree (the number of neighbors) 
+# the object "ig_blood" appended with a node attribute "degree" 
+igraph::degree(ig_blood) -> V(ig_blood)$degree
+
+# visualise the network
+# nodes placed by coordinates
+# nodes sized by degree
+# sizebar hidden
+# return a ggplot object "gg_blood"
+ig_blood %>% xGGnetwork(node.xcoord="xcoord", node.ycoord="ycoord", node.size="degree", node.size.range=c(0.5,2.5), edge.color="lightblue1", edge.arrow.gap=0) + 
+guides(size="none") -> gg_blood
+gg_blood
+```
+
+> **Step 3: Further identify a subnetwork with highly expressed genes.**
+
+```{r, echo=TRUE}
+# weight nodes by expression (TPM), the higher the more weight
+# transform the weight into a p-value-like quantity
+# thus, a node with the higher expression receives a lower p-value
+vertices %>% 
+mutate(x=log10(TPM), x=100*(x-min(x))/(max(x)-min(x)), pval=10^(-x)) %>% 
+select(symbol,pval) %>% as.data.frame -> data
+
+# identify a subnetowrk with a desired number (~30) of interconnected genes
+# return an igraph object "ig_subg"
+data %>% xSubneterGenes(network.customised=ig_blood, subnet.size=30) -> ig_subg
+
+# the object "ig_subg" appended with a node attribute "TPM"
+ind <- match(V(ig_subg)$name, vertices$symbol)
+V(ig_subg)$TPM <- log10(vertices$TPM[ind])
+
+# the object "ig_subg" appended with two node attributes "xcoord" and "ycoord"
+# based on node coordinates in the object 'ig_blood'
+ind <- match(V(ig_subg)$name, V(ig_blood)$name)
+V(ig_subg)$xcoord <- V(ig_blood)$xcoord[ind]
+V(ig_subg)$ycoord <- V(ig_blood)$ycoord[ind]
+
+# visualise the subnetwork
+# nodes labelled by gene names
+# nodes placed by coordinates
+# nodes colored by TPM
+# return a ggplot object "gg_subg"
+ig_subg %>% xGGnetwork(node.label="name", node.label.size=2, node.label.color="black", node.label.force=0.05, node.xcoord="xcoord", node.ycoord="ycoord", node.color="TPM", node.color.title=expression(log[10]("median TPM")), colormap="brewer.Greens", zlim=c(0,4), edge.color="lightblue", edge.arrow.gap=0) -> gg_subg
+gg_subg
+```
+
+> **Step 4. Highlight the subnetwork within the parent network.**
+
+```{r, echo=TRUE}
+# the "ig_blood" (the parent network) marked by the "ig_subg" (the subnetwork)
+# return an igraph object "ig_blood2", the same as "ig_blood"
+# but appended with a node attribute ("mark") and edge attribute ("mark") 
+ig_blood2 <- xMarkNet(ig_blood, ig_subg)
+
+# the object "ig_blood2" appended with two node attributes "xcoord" and "ycoord" 
+# coordinates calculated using the Fruchterman-Reingold layout algorithm
+ig_blood2 %>% xLayout("gplot.layout.fruchtermanreingold") -> ig_blood2
+
+# the object "ig_blood2" appended with two edge attributes
+# "color" for edge coloring and "color.alpha" for edge color transparency
+E(ig_blood2)$color <- ifelse(E(ig_blood2)$mark==0, "lightblue1", "darkgreen")
+E(ig_blood2)$color.alpha <- ifelse(E(ig_blood2)$mark==0, 0.3, 0.9)
+
+# visualise the network highlighted by the subnetwork
+# nodes placed by coordinates
+# nodes sized by degree
+# nodes colored differently, thus, being highlighted
+# edges colored differently, thus, being highlighted
+# return a ggplot object "gg_blood2"
+ig_blood2 %>% xGGnetwork(node.xcoord="xcoord", node.ycoord="ycoord", , node.size="degree", node.size.range=c(0.5,2.5), node.color="mark", colormap="orange-darkgreen", node.color.alpha=0.7, edge.color="color", edge.color.alpha="color.alpha", edge.arrow.gap=0) + guides(size="none") + guides(color="none") -> gg_blood2
+gg_blood2
+```
+
+> **Step 5. Display expression levels for genes in the subnetwork.**
+```{r, echo=TRUE}
+# extract whole blood expression data for genes in the subnetwork
+GTEx_V8_TPM_boxplot %>% 
+filter(SMTSD %in% c("Whole Blood"), Symbol %in% V(ig_subg)$name) -> data
+
+# genes ordered by median expression level, converted into a factor
+data %>% arrange(middle) %>% mutate(Symbol=fct_inorder(Symbol)) -> data
+
+# draw the boxplot, showing the distribution among the blood samples
+data %>% ggplot(aes(x=Symbol)) + geom_boxplot(stat="identity", aes(ymin=ymin,lower=lower,middle=middle,upper=upper,ymax=ymax), fill="green3") + ylab("TPM") + xlab("") + scale_y_log10() + coord_flip() + theme_minimal()
+```
+
+> **Step 6. Perform phenotype enrichment analysis for genes in the subnetwork.**
+```{r, echo=TRUE}
+# define the test background (all genes expressed in the whole blood)
+GTEx_V8_TPM_boxplot %>% filter(SMTSD=="Whole Blood", ymin>=1) %>% 
+pull(Symbol) -> background
+
+# perform enrichment analysis using mammalian phenotype ontology
+# return an eTerm object "eTerm"
+V(ig_subg)$name %>% xEnricherGenes(background=background, ontology="MP", guid=guid) -> eTerm
+
+# circular visualisation of enriched phenotypes within the ontology	
+eTerm %>% xEnrichGGraph(fixed=F, node.label.direction="leftright", slim=c(1,3))
+```
+
+
+## Case 3
+
+In this case, we introduce a more advanced analysis workflow, showing how to identify tissue clusters (`Steps 2 and 7`) and differential interactions (`Steps 8-10`) based on the integration of genetic interactions with gene expression. 
+
+> **Step 1: Load the packages and import human genetic interaction data as well as human tissue gene expression data (see `Materials` above).**
+
+```{r, eval=F, include=TRUE}
+# load the packages used in this case
+library(tidyverse)
+library(XGR)
+library(ggrepel)
+library(magrittr)
+library(broom)
+library(limma)
+library(biobroom)
+library(patchwork)
+library(gridExtra)
+
+# also load the package "osfr" aided in importing data from https://osf.io/gskpn
+library(osfr)
+guid <- "gskpn"
+
+# import genetic interaction data
+# converted into two tibbles "vertices" and "edges"
+ig.BioGRID_genetic <- xRDataLoader("ig.BioGRID_genetic", guid=guid)
+ig.BioGRID_genetic %>% igraph::as_data_frame("vertices") %>% as_tibble() -> vertices
+ig.BioGRID_genetic %>% igraph::as_data_frame("edges") %>% as_tibble() -> edges
+
+# import gene expression data
+GTEx_V8_TPM_boxplot <- xRDataLoader("GTEx_V8_TPM_boxplot", guid=guid)
+```
+
+> **Step 2. Estimate tissue-specific interaction weights.**
+
+```{r, eval=F, include=TRUE}
+# nested by tissues
+# calculate weight for each interaction and for each tissue
+# return a tibble "df_nested" with a list-column "interactions"
+GTEx_V8_TPM_boxplot %>% nest(data=-SMTSD) %>% 
+mutate(interactions=map(data, function(x){
+    x %>% select(Symbol,middle) -> x
+    edges %>% inner_join(x, by=c("from"="Symbol")) %>% rename(from_TPM=middle) %>% 
+    inner_join(x, by=c("to"="Symbol")) %>% rename(to_TPM=middle) %>%
+    mutate(weight=sqrt(log10(from_TPM+1)*log10(1+to_TPM)))
+})) -> df_nested
+```
+
+> **Step 3. Extract tissue-specific interactions.**
+
+```{r, eval=F, include=TRUE}
+# unnested by interactions
+# add interaction name "name"
+# return a tibble "df_interactions"
+df_nested %>% select(SMTSD, interactions) %>% unnest(interactions) %>% 
+mutate(name=str_c(from,"<->",to)) -> df_interactions
+```
+
+> **Step 4. Prepare a tissue-interaction matrix.**
+
+```{r, eval=F, include=TRUE}
+# pivot data from long to wide
+# return a data frame "mat" 
+# also used for differential interaction analysis at Step 8
+mat <- df_interactions %>% select(SMTSD, name, weight) %>% 
+pivot_wider(names_from=SMTSD, values_from=weight) %>% column_to_rownames("name") 
+```
+
+> **Step 5. Conduct the `multidimensional scaling` on tissues.**
+
+```{r, eval=F, include=TRUE}
+# based on the pairwise distance between tissues, projected onto 2D space 
+t(mat) %>% dist() %>% cmdscale(2, eig=T) -> res
+
+# extract tissue coordinates on 2D space
+# return a tibble "coord_tissues" with 3 columns 
+# "SMTSD" for tissues, "x1" and "x2" for 2D coordinates
+res$points %>% set_colnames(c("x1","x2")) %>% as_tibble(rownames="SMTSD") -> coord_tissues
+```
+
+> **Step 6. Optimise the number of tissue clusters using `K-means`.**
+
+```{r, eval=F, include=TRUE}
+# perform K-means clustering using a series of cluster numbers (k)
+# summarise clustering output
+# set seed to reproduce results
+# return a tibble "kclusts"
+set.seed(825)
+coord_tissues %>% select(x1,x2) -> data
+kclusts <- tibble(k=1:8) %>% mutate(res=map(k, ~kmeans(data,.x)),
+    glanced=map(res, glance), augmented=map(res, ~augment(.x,data))
+)
+
+# the variance within the clusters decreases as k increases
+# the bend/elbow point indicates no gain having more clusters
+kclusts %>% unnest(glanced) %>% ggplot(aes(k, tot.withinss)) + geom_line()
+
+# tissues colored by clusters for each value of k
+# note: the same color only means tissues within the same cluster
+kclusts %>% unnest(augmented) %>% mutate(k=str_c("k=",k)) %>% ggplot(aes(x1,x2)) + geom_point(aes(color=.cluster)) + facet_wrap(~k,ncol=4) + guides(color="none")
+```
+
+> **Step 7. Visualise the optimal tissue clusters.**
+
+```{r, eval=F, include=TRUE}
+# assign tissues to one of 5 clusters (optimal)
+# return a tibble "assignments"
+kclusts %>% unnest(augmented) %>% filter(k==5) %>% 
+left_join(coord_tissues, by=c("x1","x2")) -> assignments
+
+# tissues shaped by clusters
+# label brain-derived tissues: two clusters revealed
+# cluster 4 (cerebellar tissues)
+# cluster 5 (the rest brain tissues)
+assignments %>% filter(str_detect(SMTSD, "Brain")) -> data
+ggplot(assignments, aes(x1,x2,shape=.cluster)) + geom_point() + 
+geom_text_repel(data=data, aes(label=SMTSD), size=2) + theme_light()
+```
+
+> **Step 8. Detect differential interactions between cluster 5 and other clusters.**
+
+```{r, eval=F, include=TRUE}
+# define the design matrix
+# return a matrix "design"
+assignments %>% mutate(group=ifelse(.cluster==5, "test", "other")) %>% 
+select(SMTSD,group) -> df_group
+df_group %>% pull(group) %>% factor() %>% levels() -> lvls
+model.matrix(~0+factor(group),df_group) %>% set_colnames(lvls) -> design
+
+# fit linear model
+fit <- lmFit(mat, design)
+
+# construct contrast (cluster 5 tested against other clusters)
+contrast.matrix <- makeContrasts(contrasts="test-other", levels=design)
+
+# computer contrast from fitted linear model
+fit2 <- contrasts.fit(fit, contrast.matrix)
+
+# calculate empirical Bayes statistics for differential interactions
+eb <- eBayes(fit2)
+
+# tidy eBayes results, and calculate adjusted p-values
+# return a tibble "df_results"
+tidy(eb) %>% nest(data=-term) %>% mutate(adjp=map(data,~p.adjust(.x$p.value,method="BH"))) %>% unnest(c(data,adjp)) %>% arrange(adjp) -> df_results
+```
+
+> **Step 9. Draw volcano plot showing differential interactions.**
+
+```{r, eval=F, include=TRUE}
+# coefficient estimate [log2(fold change)] vs adjusted p-values
+# colored by empirical Bayes t-statistic, using the color scheme "jet.both"
+# return a ggplot object "gg"
+df_results %>% ggplot(aes(x=estimate, y=-log10(adjp), color=statistic)) + 
+geom_point() + scale_colour_gradientn(colors=xColormap("jet.both")(64)) + theme_minimal() + guides(color="none") -> gg
+
+# label the top 10 interactions abundant in cluster 5
+df_results %>% filter(estimate>0) %>% top_n(10, -adjp) -> data
+gg + geom_text_repel(data=data, aes(label=gene), color="black", size=2) 
+```
+
+> **Step 10. Construct and visualise a network of abundant interactions in cluster 5.**
+
+```{r, eval=F, include=TRUE}
+# extract edges with adjp < 0.01
+df_results %>% filter(estimate>0, adjp<0.01) %>% 
+separate(gene,c("from","to"),sep="<->") %>% 
+select(from,to,estimate) %>% as.data.frame -> edges_ab
+
+# extract nodes with adjp < 0.01
+df_results %>% filter(estimate>0, adjp<0.01) %>%
+separate_rows(gene, sep="<->") %>% distinct(gene) %>% rename(name=gene) %>%
+inner_join(vertices, by="name") %>% as.data.frame() -> nodes_ab
+
+# construct the network 
+# return an igraph object "ig_ab"
+ig_ab <- igraph::graph_from_data_frame(d=edges_ab, directed=F, vertices=nodes_ab) 
+
+# the object "ig_ab" appended with two node attributes "xcoord" and "ycoord"
+# coordinates calculated using the Fruchterman-Reingold layout algorithm
+ig_ab %>% xLayout("gplot.layout.fruchtermanreingold") -> ig_ab
+
+# the object "ig_ab" appended with a node attribute "degree" (the node degree)
+igraph::degree(ig_ab) -> V(ig_ab)$degree
+
+# the object "ig_ab" appended with a node attribute "label"
+# in order to label nodes with 2 or more neighbors
+ifelse(V(ig_ab)$degree>=2, V(ig_ab)$name, "") -> V(ig_ab)$label
+
+# visualise the network
+# label nodes with 2 or more neighbors
+# nodes placed by coordinates on the plane
+# nodes sized by degree
+# return a ggplot object "gg_ab"
+ig_ab %>% xGGnetwork(node.label="label", node.label.size=1.5, node.xcoord="xcoord", node.ycoord="ycoord", node.size="degree", node.size.range=c(0.5,4), edge.color="lightblue", edge.arrow.gap=0) + guides(size="none") -> gg_up
+gg_up
+```
+
+> **Step 11. Perform pathway enrichment analysis for genes involved in abundant interactions in cluster 5.**
+
+```{r, eval=F, include=TRUE}
+# define the test background (all interacting genes)
+df_results %>% separate_rows(gene, sep="<->") %>% 
+distinct(gene) %>% pull(gene) -> background
+
+# perform enrichment analysis using KEGG pathways
+# return an eTerm object "eTerm_kegg"
+V(ig_ab)$name %>% xEnricherGenes(background=background, ontology="KEGG", guid=guid) -> eTerm_kegg
+
+# visualise enriched pathways faceted by category
+# label up to top 3 per category
+eTerm_kegg %>% xEnrichViewer("all", detail=T) %>% rename(group=namespace) %>% filter(group %in% c("Cellular Process","Environmental Process","Human Diseases","Organismal Systems")) %>% xEnrichDotplot(label.top=3) + facet_wrap(~group, ncol=4)
+```
+
+> **Step 12. Conduct evolutionary analysis for genes involved in abundant interactions in cluster 5.**
+
+```{r, eval=F, include=TRUE}
+# define the test background (all interacting genes)
+df_results %>% separate_rows(gene,sep="<->") %>% 
+distinct(gene) %>% pull(gene) -> background
+
+# perform evolutionary analysis using phylostratigraphy
+# based on two-sided Fisher's exact test
+# return an eTerm object "eTerm_psg"
+V(ig_ab)$name %>% xEnricherGenes(background=background, ontology="PSG", size.range=c(10,20000), p.tail="two-tails", guid=guid) -> eTerm_psg
+
+# forest plot for all ancestors analysed
+# return an ggplot object "gg_psg"
+xEnrichForest(eTerm_psg, top_num="auto", FDR.cutoff=1, sortBy="none") -> gg_psg
+
+# a table listing genes first created at the ancestors (enriched only) 
+# return a gtable object "gt_psg"
+eTerm_psg %>% xEnrichViewer("all", details=T) %>% as_tibble(rownames="id") %>% 
+mutate(id=as.numeric(id)) %>% arrange(id) %>% column_to_rownames("id") %>% 
+filter(zscore>0, adjp<0.05) %>% 
+mutate(Ancestor=name, Genes=str_wrap(members_Overlap,width=50)) %>% 
+select(Ancestor,Genes) %>% tableGrob(rows=NULL,theme=ttheme_default(base_size=6)) -> gt_psg
+
+# visualise together the forest plot and the table together
+# using the package "patchwork", a composer of plots 
+gg_psg + gt_psg + plot_layout(ncol=2, widths=c(1,3))
+```
+
+# Session Info
+
+Here is the output of `sessionInfo()` summarising information about R, the OS, and attached/loaded packages:
+
+```{r sessionInfo, echo=FALSE, eval=T}
+sessionInfo()
+```

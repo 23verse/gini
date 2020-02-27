@@ -4,21 +4,21 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective</title>
-  <meta name="description" content="Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective." />
+  <title>2.2 Genetic interactions | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective</title>
+  <meta name="description" content="2.2 Genetic interactions | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective." />
   <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective" />
+  <meta property="og:title" content="2.2 Genetic interactions | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://luca0330.github.io/gini/" />
   <meta property="og:image" content="https://luca0330.github.io/gini/cover.png" />
-  <meta property="og:description" content="Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective." />
+  <meta property="og:description" content="2.2 Genetic interactions | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective." />
   <meta name="github-repo" content="luca0330/gini" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective" />
+  <meta name="twitter:title" content="2.2 Genetic interactions | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective" />
   
-  <meta name="twitter:description" content="Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective." />
+  <meta name="twitter:description" content="2.2 Genetic interactions | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective." />
   <meta name="twitter:image" content="https://luca0330.github.io/gini/cover.png" />
 
 
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="materials.html"/>
+<link rel="prev" href="r-and-packages.html"/>
+<link rel="next" href="gene-expression.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -161,24 +161,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective</h1>
-<p class="author"><em><div class="line-block">Lulu Jiang, Hai Fang<br />
-<br />
-University of Oxford</div></em></p>
-<p class="date"><em>2020-01-10</em></p>
-</div>
-<div id="index" class="section level1">
-<h1><span class="header-section-number">Section 1</span> Overview</h1>
-<p>We describe three showcases analysing human genetic interactions and/or gene expression data in human tissues. All done exclusively using R one-liner, defined as a sequential pipeline of elementary functions chained together achieving a complex task. We will guide the users through step-by-step instructions on (case 1) how to identify, visualize and interpret network modules of genetic interactions; (case 2) how to identify and interpret tissue-specific genetic interactions; and (case 3) how to carry out genetic interaction-based tissue clustering and differential interaction analysis. All three showcases are producible on its own right, achieved in relatively short runtime (~20 min for case 1, ~15 min for case 2, and ~25 min for case 3). We encourage the users to run through demos first before analysing their own datasets.</p>
+<div id="genetic-interactions" class="section level2">
+<h2><span class="header-section-number">2.2</span> Genetic interactions</h2>
+<p>We extracted human genetic interactions from <code>BioGRID</code> (version 3.5.179) involving 3102 genes (mapped to NCBI GeneID; the same hereinafter) and their 7856 interactions. This dataset was preprocessed into an <code>igraph</code> object (using the <code>igraph</code> package), saved as an RData-formatted file <code>ig.BioGRID_genetic.RData</code>, deposited at <code>https://osf.io/gskpn</code>).</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">ig.BioGRID_genetic</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">## IGRAPH 0a7230a UN-- 3102 7856 -- </span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">## + attr: name (v/c), geneid (v/n), symbol (v/c), description (v/c),</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">## | nPMID (e/n)</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">## + edges from 0a7230a (vertex names):</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">##  [1] A1BG  --REV3L   A2M   --KRAS    AAGAB --TP53    AAMP  --KRAS   </span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">##  [5] AANAT --P2RY6   AANAT --SPHK1   AANAT --SSTR5   AANAT --TOP1   </span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">##  [9] AARS2 --LEO1    AARS2 --MRPS16  AARS2 --MRPS5   AARS2 --PSMB6  </span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">## [13] AATF  --DONSON  AATF  --GFI1B   AATF  --MCM3AP  ABCB5 --CSK    </span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">## [17] ABCB5 --KRAS    ABCB7 --AURKA   ABCB7 --HSCB    ABCB7 --LONP1  </span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">## [21] ABCB7 --MBTPS2  ABCB7 --MED23   ABCB7 --NUBP1   ABCB7 --PITRM1 </span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">## [25] ABCB7 --TAF2    ABCE1 --KRAS    ABCG2 --CSK     ABCG5 --FLT3   </span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">## + ... omitted several edges</span></a></code></pre></div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="materials.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="r-and-packages.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="gene-expression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

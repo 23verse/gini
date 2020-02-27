@@ -1,0 +1,10 @@
+book_filename: "GINI.Rmd"
+repo: https://github.com/luca0330/gini/
+output_dir: "GINIgitbook"
+language:
+  label:
+    fig: "FIGURE "
+    tab: "TABLE "
+  ui:
+    chapter_name: "Section "
+delete_merged_file: true

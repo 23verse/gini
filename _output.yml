@@ -1,0 +1,44 @@
+bookdown::gitbook:
+  highlight: "default"
+  split_by: "section"
+  self_contained: no
+  config:
+    toc:
+      before: |
+        <li><a href="./index.html">GINI</a></li>
+      after: |
+        <li><a href="https://github.com/rstudio/bookdown" target="_blank">Published with bookdown</a></li>
+      collapse: subsection
+      scroll_highlight: yes
+    toolbar:
+      position: fixed
+    search: no
+    edit: null
+    fontsettings:
+      theme: sepia
+      family: sans
+      size: 2
+    download: no
+    sharing:
+      facebook: no
+      github: no
+      twitter: no
+      linkedin: no
+      weibo: no
+      instapaper: no
+      vk: no
+      all: ['facebook', 'github', 'twitter', 'linkedin', 'weibo', 'instapaper', 'vk']
+    info: no
+    
+bookdown::pdf_book:
+  latex_engine: xelatex
+  keep_tex: yes
+  template: "default"
+  toc_depth: 3
+  toc_unnumbered: no
+  toc_appendix: yes
+  pandoc_args: --top-level-division=chapter
+bookdown::tufte_html_book:
+  highlight: "default"
+  split_by: "none"
+  toc: false

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3.1 Case 1 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective</title>
+  <meta name="description" content="3.1 Case 1 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective." />
+  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3.1 Case 1 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://luca0330.github.io/gini/" />
+  <meta property="og:image" content="https://luca0330.github.io/gini/cover.png" />
+  <meta property="og:description" content="3.1 Case 1 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective." />
+  <meta name="github-repo" content="luca0330/gini" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3.1 Case 1 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective" />
+  
+  <meta name="twitter:description" content="3.1 Case 1 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective." />
+  <meta name="twitter:image" content="https://luca0330.github.io/gini/cover.png" />
+
+
+
+<meta name="date" content="2020-01-10" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="methods.html"/>
+<link rel="next" href="case-2.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./index.html">GINI</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Overview</a></li>
+<li class="chapter" data-level="2" data-path="materials.html"><a href="materials.html"><i class="fa fa-check"></i><b>2</b> Materials</a><ul>
+<li class="chapter" data-level="2.1" data-path="r-and-packages.html"><a href="r-and-packages.html"><i class="fa fa-check"></i><b>2.1</b> R and packages</a></li>
+<li class="chapter" data-level="2.2" data-path="genetic-interactions.html"><a href="genetic-interactions.html"><i class="fa fa-check"></i><b>2.2</b> Genetic interactions</a></li>
+<li class="chapter" data-level="2.3" data-path="gene-expression.html"><a href="gene-expression.html"><i class="fa fa-check"></i><b>2.3</b> Gene expression</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>3</b> Methods</a><ul>
+<li class="chapter" data-level="3.1" data-path="case-1.html"><a href="case-1.html"><i class="fa fa-check"></i><b>3.1</b> Case 1</a></li>
+<li class="chapter" data-level="3.2" data-path="case-2.html"><a href="case-2.html"><i class="fa fa-check"></i><b>3.2</b> Case 2</a></li>
+<li class="chapter" data-level="3.3" data-path="case-3.html"><a href="case-3.html"><i class="fa fa-check"></i><b>3.3</b> Case 3</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="session-info.html"><a href="session-info.html"><i class="fa fa-check"></i><b>4</b> Session Info</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="_blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="case-1" class="section level2">
+<h2><span class="header-section-number">3.1</span> Case 1</h2>
+<p>We provide the step-by-step instructions on how to identify modular/community structure (<code>Step 2</code>), the essential to subsequently interpret the genetic interaction network, both visually intuitive and scientifically sound. <code>Steps 3-6</code> detail how to determine 2D coordinates of the network respecting modular structure, and how to add the hull and labelling for each of the modules, while <code>Steps 7-12</code> show how to perform pathway analysis of modules for knowledge discovery and interpretation.</p>
+<blockquote>
+<p><strong>Step 1: Load the packages and import human genetic interaction data (see <code>Materials</code> above).</strong></p>
+</blockquote>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># load packages used in this case</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw">library</span>(dnet)</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="kw">library</span>(XGR)</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="kw">library</span>(ggrepel)</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co"># also load the package &quot;osfr&quot; aided in importing data from https://osf.io/gskpn</span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="kw">library</span>(osfr)</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">guid &lt;-<span class="st"> &quot;gskpn&quot;</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co"># import the genetic interaction network data</span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12">ig.BioGRID_genetic &lt;-<span class="st"> </span><span class="kw">xRDataLoader</span>(<span class="st">&quot;ig.BioGRID_genetic&quot;</span>, <span class="dt">guid=</span>guid)</a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co"># keep the largest interconnected component</span></a>
+<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co"># return an igraph object called &quot;ig&quot;</span></a>
+<a class="sourceLine" id="cb5-16" data-line-number="16">ig.BioGRID_genetic <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">dNetInduce</span>(<span class="dt">nodes_query=</span><span class="kw">V</span>(ig.BioGRID_genetic)<span class="op">$</span>name) -&gt;<span class="st"> </span>ig</a></code></pre></div>
+<blockquote>
+<p><strong>Step 2: Identify modular structure using the multi-level modularity optimisation algorithm.</strong></p>
+</blockquote>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># the object &quot;ig&quot; appended with a node attribute &quot;modules&quot;</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">ig <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">cluster_louvain</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">membership</span>() -&gt;<span class="st"> </span><span class="kw">V</span>(ig)<span class="op">$</span>modules</a></code></pre></div>
+<blockquote>
+<p><strong>Step 3: Determine 2D coordinates for nodes, initialised within a module (using the <code>Kamada-Kawai layout</code> algorithm) and then adjusted considering between-module relations (via the <code>diffusion-limited aggregation</code> algorithm).</strong></p>
+</blockquote>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># the object &quot;ig&quot; appended with two node attributes &quot;xcoord&quot; and &quot;ycoord&quot;</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co"># and an edge attribute &quot;color&quot;</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">ig <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">xAddCoords</span>(<span class="st">&quot;modules&quot;</span>) -&gt;<span class="st"> </span>ig</a></code></pre></div>
+<blockquote>
+<p><strong>Step 4: Visualise the network respecting modular structure.</strong></p>
+</blockquote>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># nodes placed by coordinates</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co"># nodes colored by modules using the color scheme &quot;ggplot2&quot;</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co"># edges colored differently within a module and between modules</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co"># colorbar hidden</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co"># return a ggplot object &quot;gg&quot;</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">ig <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">xGGnetwork</span>(<span class="dt">node.xcoord=</span><span class="st">&quot;xcoord&quot;</span>, <span class="dt">node.ycoord=</span><span class="st">&quot;ycoord&quot;</span>, <span class="dt">node.color=</span><span class="st">&quot;modules&quot;</span>, <span class="dt">colormap=</span><span class="st">&quot;ggplot2&quot;</span>, <span class="dt">node.color.alpha=</span><span class="fl">0.5</span>, <span class="dt">node.size.range=</span><span class="fl">0.3</span>, <span class="dt">edge.color=</span><span class="st">&quot;color&quot;</span>, <span class="dt">edge.arrow.gap=</span><span class="dv">0</span>) <span class="op">+</span><span class="st"> </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="st">&quot;none&quot;</span>) -&gt;<span class="st"> </span>gg</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co"># make node colors discrete with colorbar hidden</span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">breaks &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="kw">n_distinct</span>(<span class="kw">V</span>(ig)<span class="op">$</span>modules))</a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">gg <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_gradientn</span>(<span class="dt">colors=</span><span class="kw">xColormap</span>(<span class="st">&quot;ggplot2&quot;</span>)(<span class="dv">64</span>), <span class="dt">breaks=</span>breaks) -&gt;<span class="st"> </span>gg</a></code></pre></div>
+<blockquote>
+<p><strong>Step 5. Compute the hull for nodes per module that is added as a polygon layer.</strong></p>
+</blockquote>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># data for nodes extracted from the object &quot;gg&quot;</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co"># data nested by the column &quot;modules&quot;</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co"># apply the function &quot;chull&quot; to the nested data per module</span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co"># results unnested to obtain the coordinates for hull points per module</span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co"># edges colored differently within a module and between modules</span></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co"># return a tibble &quot;df_hull&quot;</span></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">gg<span class="op">$</span>data_nodes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">nest</span>(<span class="dt">data=</span><span class="op">-</span>modules) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="kw">mutate</span>(<span class="dt">res=</span><span class="kw">map</span>(data,<span class="op">~</span><span class="kw">slice</span>(.x, <span class="kw">chull</span>(.x<span class="op">$</span>x,.x<span class="op">$</span>y)))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="kw">unnest</span>(res) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(modules, x, y) -&gt;<span class="st"> </span>df_hull</a>
+<a class="sourceLine" id="cb9-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co"># the object &quot;gg&quot; added with a polygon layer</span></a>
+<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="co"># hull colored using the color scheme &quot;ggplot2&quot; with the colorbar hidden</span></a>
+<a class="sourceLine" id="cb9-13" data-line-number="13">gg <span class="op">+</span><span class="st"> </span><span class="kw">geom_polygon</span>(<span class="dt">data=</span>df_hull,<span class="kw">aes</span>(x, y, <span class="dt">group=</span>modules, <span class="dt">fill=</span>modules),<span class="dt">alpha=</span><span class="fl">0.1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-14" data-line-number="14"><span class="kw">scale_fill_gradientn</span>(<span class="dt">colors=</span><span class="kw">xColormap</span>(<span class="st">&quot;ggplot2&quot;</span>)(<span class="dv">64</span>), <span class="dt">breaks=</span>breaks) <span class="op">+</span><span class="st"> </span><span class="kw">guides</span>(<span class="dt">fill=</span><span class="st">&quot;none&quot;</span>) -&gt;<span class="st"> </span>gg</a></code></pre></div>
+<blockquote>
+<p><strong>Step 6. Label modules as a text layer, altogether shown.</strong></p>
+</blockquote>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># calculate the centre point coordinates for each of hulls/modules</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co"># done so by first grouping by modules</span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co"># then being summarised into the median point of nodes for each of hulls</span></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="co"># return a tibble &quot;df_centre&quot;</span></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">df_hull <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(modules) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">x0=</span><span class="kw">median</span>(x), <span class="dt">y0=</span><span class="kw">median</span>(y))-&gt;<span class="st"> </span>df_centre</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co"># the object &quot;gg&quot; added with a text layer</span></a>
+<a class="sourceLine" id="cb10-8" data-line-number="8">gg <span class="op">+</span><span class="st"> </span><span class="kw">geom_text_repel</span>(<span class="dt">data=</span>df_centre, <span class="kw">aes</span>(x0, y0, <span class="dt">label=</span>modules)) -&gt;<span class="st"> </span>gg</a>
+<a class="sourceLine" id="cb10-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb10-10" data-line-number="10"><span class="co"># shown collectively by simply typing the object &quot;gg&quot;</span></a>
+<a class="sourceLine" id="cb10-11" data-line-number="11">gg</a></code></pre></div>
+<blockquote>
+<p><strong>Step 7. Summarise the number of genes found in each module.</strong></p>
+</blockquote>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># extract the number of genes per module</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">ig <span class="op">%&gt;%</span><span class="st"> </span>igraph<span class="op">::</span><span class="kw">as_data_frame</span>(<span class="st">&quot;vertices&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(modules) -&gt;<span class="st"> </span>data</a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="co"># modules sorted by gene numbers, converted into a factor type </span></a>
+<a class="sourceLine" id="cb11-5" data-line-number="5">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(n)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">modules=</span>modules <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.character</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">fct_inorder</span>()) -&gt;<span class="st"> </span>data</a>
+<a class="sourceLine" id="cb11-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="co"># draw the bar plot</span></a>
+<a class="sourceLine" id="cb11-8" data-line-number="8">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(modules,n)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">fill=</span><span class="st">&quot;steelblue&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_y_log10</span>(<span class="dt">limits=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1000</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">coord_flip</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
+<blockquote>
+<p><strong>Step 8. Perform pathway enrichment analysis for genes in each module.</strong></p>
+</blockquote>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co"># extract genes per module</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">ig <span class="op">%&gt;%</span><span class="st"> </span>igraph<span class="op">::</span><span class="kw">as_data_frame</span>(<span class="st">&quot;vertices&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(symbol, modules) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(modules) -&gt;<span class="st"> </span>df</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co"># define the test background</span></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5">df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(symbol) -&gt;<span class="st"> </span>background</a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co"># perform enrichment analysis using KEGG environmental process pathways</span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co"># Fisher&#39;s exact test used by default</span></a>
+<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co"># return a tibble &quot;df_nested&quot; with the list-column &quot;eTerm&quot; for enrichment results</span></a>
+<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co"># each contains an eTerm object if found, NULL otherwise</span></a>
+<a class="sourceLine" id="cb12-11" data-line-number="11">df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">nest</span>(<span class="dt">data=</span><span class="op">-</span>modules) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">eTerm=</span><span class="kw">map</span>(data, <span class="op">~</span><span class="kw">xEnricherGenes</span>(.x<span class="op">$</span>symbol, <span class="dt">background=</span>background, <span class="dt">ontology=</span><span class="st">&quot;KEGGenvironmental&quot;</span>, <span class="dt">guid=</span>guid))) -&gt;<span class="st"> </span>df_nested</a>
+<a class="sourceLine" id="cb12-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="co"># the tibble &quot;df_nested&quot; with rows/modules filtered out if NULL</span></a>
+<a class="sourceLine" id="cb12-14" data-line-number="14">df_nested <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="kw">map_lgl</span>(eTerm, <span class="op">~!</span><span class="kw">is.null</span>(.x))) -&gt;<span class="st"> </span>df_nested</a>
+<a class="sourceLine" id="cb12-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co"># the tibble &quot;df_nested&quot; appended with two list-columns </span></a>
+<a class="sourceLine" id="cb12-17" data-line-number="17"><span class="co"># the list-column &quot;forest&quot; for forest plot and &quot;ladder&quot; for ladder plot</span></a>
+<a class="sourceLine" id="cb12-18" data-line-number="18"><span class="co"># both plots as a ggplot object</span></a>
+<a class="sourceLine" id="cb12-19" data-line-number="19">df_nested <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-20" data-line-number="20"><span class="kw">mutate</span>(<span class="dt">forest=</span><span class="kw">map</span>(eTerm, <span class="op">~</span><span class="kw">xEnrichForest</span>(.x))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-21" data-line-number="21"><span class="kw">mutate</span>(<span class="dt">ladder=</span><span class="kw">map</span>(eTerm, <span class="op">~</span><span class="kw">xEnrichLadder</span>(.x))) -&gt;<span class="st"> </span>df_nested</a>
+<a class="sourceLine" id="cb12-22" data-line-number="22"></a>
+<a class="sourceLine" id="cb12-23" data-line-number="23"><span class="co"># print the content of the tibble &quot;df_nested&quot;</span></a>
+<a class="sourceLine" id="cb12-24" data-line-number="24">df_nested</a></code></pre></div>
+<blockquote>
+<p><strong>Step 9. Explore enrichment results for a module.</strong></p>
+</blockquote>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="co"># print the content of the eTerm object for module 3</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="co"># note: the 2nd row of the tibble &quot;df_nested&quot;</span></a>
+<a class="sourceLine" id="cb13-3" data-line-number="3">df_nested<span class="op">$</span>eTerm[[<span class="dv">2</span>]]</a>
+<a class="sourceLine" id="cb13-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="co"># visualise as a forest plot for module 3</span></a>
+<a class="sourceLine" id="cb13-6" data-line-number="6">df_nested<span class="op">$</span>forest[[<span class="dv">2</span>]]</a>
+<a class="sourceLine" id="cb13-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb13-8" data-line-number="8"><span class="co"># visualise as a dot plot for module 3</span></a>
+<a class="sourceLine" id="cb13-9" data-line-number="9">df_nested<span class="op">$</span>ladder[[<span class="dv">2</span>]]</a></code></pre></div>
+<blockquote>
+<p><strong>Step 10. Prepare the output for all modules.</strong></p>
+</blockquote>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="co"># the tibble &quot;df_nested&quot; appended with the list-column &quot;output&quot;</span></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="co"># each entry in this list-column is a conventional data frame</span></a>
+<a class="sourceLine" id="cb14-3" data-line-number="3">df_nested <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">output=</span><span class="kw">map</span>(eTerm, <span class="op">~</span><span class="kw">xEnrichViewer</span>(.x, <span class="st">&quot;all&quot;</span>))) -&gt;<span class="st"> </span>df_nested</a>
+<a class="sourceLine" id="cb14-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="co"># print the content of the updated tibble &quot;df_nested&quot;</span></a>
+<a class="sourceLine" id="cb14-6" data-line-number="6">df_nested</a>
+<a class="sourceLine" id="cb14-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="co"># the tibble &quot;df_nested&quot; unnested into a tibble &quot;df_output&quot;</span></a>
+<a class="sourceLine" id="cb14-9" data-line-number="9">df_nested <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(modules, output) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unnest</span>(output) -&gt;<span class="st"> </span>df_output</a>
+<a class="sourceLine" id="cb14-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="co"># print the content of the tibble &quot;df_nested&quot;</span></a>
+<a class="sourceLine" id="cb14-12" data-line-number="12">df_output</a></code></pre></div>
+<blockquote>
+<p><strong>Step 11. Output enrichment results into a file <code>output.txt</code>.</strong></p>
+</blockquote>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="co"># write into a text file &quot;output.txt&quot; in the R working directory</span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2">df_output <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">write_delim</span>(<span class="st">&quot;output.txt&quot;</span>, <span class="dt">delim=</span><span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>)</a></code></pre></div>
+<blockquote>
+<p><strong>Step 12. Visualise and compare enrichment results between modules.</strong></p>
+</blockquote>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="co"># rename the column &quot;modules&quot; into &quot;group&quot; in the tibble &quot;df_output&quot;</span></a>
+<a class="sourceLine" id="cb16-2" data-line-number="2">df_output <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">group=</span>modules) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>() -&gt;<span class="st"> </span>df_output</a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="co"># forest plot of up to top 5 pathways enriched (FDR&lt;0.05 and CI&gt;1) per module</span></a>
+<a class="sourceLine" id="cb16-5" data-line-number="5"><span class="co"># return a ggplot object &quot;gg_forest&quot;</span></a>
+<a class="sourceLine" id="cb16-6" data-line-number="6">df_output <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">xEnrichForest</span>(<span class="dt">top_num=</span><span class="dv">5</span>, <span class="dt">CI.one=</span>F, <span class="dt">drop=</span>T, <span class="dt">zlim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">20</span>)) -&gt;<span class="st"> </span>gg_forest</a>
+<a class="sourceLine" id="cb16-7" data-line-number="7">gg_forest</a>
+<a class="sourceLine" id="cb16-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb16-9" data-line-number="9"><span class="co"># chord plot of pathways (the left-half) enriched in modules (right-half)</span></a>
+<a class="sourceLine" id="cb16-10" data-line-number="10"><span class="co"># up to top 5 pathways (FDR&lt;0.05) per module shown</span></a>
+<a class="sourceLine" id="cb16-11" data-line-number="11"><span class="co"># note: the gap/angle between two halves controlled by the argument &quot;big.gap&quot;</span></a>
+<a class="sourceLine" id="cb16-12" data-line-number="12">df_output <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">xEnrichChord</span>(<span class="dt">top_num=</span><span class="dv">5</span>, <span class="dt">legend=</span>F, <span class="dt">text.size=</span><span class="fl">0.4</span>, <span class="dt">big.gap=</span><span class="dv">90</span>)</a></code></pre></div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="methods.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="case-2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "github", "twitter", "linkedin", "weibo", "instapaper", "vk"]
+},
+"fontsettings": {
+"theme": "sepia",
+"family": "sans",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+},
+"search": false,
+"info": false
+});
+});
+</script>
+
+</body>
+
+</html>

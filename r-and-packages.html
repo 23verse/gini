@@ -4,21 +4,21 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective</title>
-  <meta name="description" content="Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective." />
+  <title>2.1 R and packages | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective</title>
+  <meta name="description" content="2.1 R and packages | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective." />
   <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective" />
+  <meta property="og:title" content="2.1 R and packages | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://luca0330.github.io/gini/" />
   <meta property="og:image" content="https://luca0330.github.io/gini/cover.png" />
-  <meta property="og:description" content="Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective." />
+  <meta property="og:description" content="2.1 R and packages | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective." />
   <meta name="github-repo" content="luca0330/gini" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective" />
+  <meta name="twitter:title" content="2.1 R and packages | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective" />
   
-  <meta name="twitter:description" content="Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective." />
+  <meta name="twitter:description" content="2.1 R and packages | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective." />
   <meta name="twitter:image" content="https://luca0330.github.io/gini/cover.png" />
 
 
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="materials.html"/>
+<link rel="prev" href="materials.html"/>
+<link rel="next" href="genetic-interactions.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -161,24 +161,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective</h1>
-<p class="author"><em><div class="line-block">Lulu Jiang, Hai Fang<br />
-<br />
-University of Oxford</div></em></p>
-<p class="date"><em>2020-01-10</em></p>
-</div>
-<div id="index" class="section level1">
-<h1><span class="header-section-number">Section 1</span> Overview</h1>
-<p>We describe three showcases analysing human genetic interactions and/or gene expression data in human tissues. All done exclusively using R one-liner, defined as a sequential pipeline of elementary functions chained together achieving a complex task. We will guide the users through step-by-step instructions on (case 1) how to identify, visualize and interpret network modules of genetic interactions; (case 2) how to identify and interpret tissue-specific genetic interactions; and (case 3) how to carry out genetic interaction-based tissue clustering and differential interaction analysis. All three showcases are producible on its own right, achieved in relatively short runtime (~20 min for case 1, ~15 min for case 2, and ~25 min for case 3). We encourage the users to run through demos first before analysing their own datasets.</p>
+<div id="r-and-packages" class="section level2">
+<h2><span class="header-section-number">2.1</span> R and packages</h2>
+<p>At the time of writing, the most recent version of R is 3.6.2 (Dark and Stormy Night). The instructions of how to install R in different platforms (Linux, OS X and Windows) can be found at <a href="https://www.r-project.org" class="uri">https://www.r-project.org</a> where precompiled binaries are provided for download. For Linux users who do not have a <code>sudo</code> privilege, R could be installed from the source code at the home directory (that is, <code>$HOME</code>):</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">wget https<span class="op">:</span><span class="er">//</span>cran.wu.ac.at<span class="op">/</span>src<span class="op">/</span>base<span class="op">/</span>R<span class="dv">-3</span><span class="op">/</span>R<span class="dv">-3</span>.<span class="dv">6</span>.<span class="fl">2.</span>tar.gz</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">tar xvfz R<span class="dv">-3</span>.<span class="dv">6</span>.<span class="fl">2.</span>tar.gz</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">cd R<span class="dv">-3</span>.<span class="fl">6.2</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">.<span class="op">/</span>configure <span class="op">--</span>prefix=<span class="er">$</span>HOME<span class="op">/</span>R<span class="dv">-3</span>.<span class="fl">6.2</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">make</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">make check</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">make install</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="op">$</span>HOME<span class="op">/</span>R<span class="dv">-3</span>.<span class="fl">6.2</span><span class="op">/</span>bin<span class="op">/</span>R <span class="co"># start R</span></a></code></pre></div>
+<p>We highly recommend using a dedicated package <code>BiocManager</code> to install and update any packages that have been deposited into <code>Bioconductor</code> and <code>CRAN</code>, two repositories that are exclusive to each other so that a package cannot be deposited into both. <code>BiocManager</code> should be installed first in a conventional way (i.e. using the function <code>install.packages</code>), and then can be used to install other packages in a single step. Once an additional package <code>remotes</code> also installed, <code>BiocManager</code> can be also used to install packages hosted at <code>GitHub</code>, usually as a development repository prior to submission into <code>Bioconductor</code> or <code>CRAN</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># first, install the package BiocManager</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">install.packages</span>(<span class="st">&quot;BiocManager&quot;</span>)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co"># then install packages from Bioconductor and CRAN</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="kw">c</span>(<span class="st">&quot;biobroom&quot;</span>,<span class="st">&quot;dnet&quot;</span>,<span class="st">&quot;ggrepel&quot;</span>,<span class="st">&quot;gridExtra&quot;</span>,<span class="st">&quot;limma&quot;</span>,<span class="st">&quot;patchwork&quot;</span>,<span class="st">&quot;remotes&quot;</span>,<span class="st">&quot;tidyverse&quot;</span>,<span class="st">&quot;XGR&quot;</span>), <span class="dt">dependencies=</span>T)</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co"># can also install packages from GitHub</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">&quot;centerforopenscience/osfr&quot;</span>)</a></code></pre></div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="materials.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="materials.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="genetic-interactions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

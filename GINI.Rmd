@@ -4,10 +4,10 @@ classoption: oneside
 title: "Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective"
 author: |
  | [Lulu Jiang](mailto:lulu.jiang@dpag.ox.ac.uk), [Hai Fang](mailto:23versify@gmail.com)
-date: "`r Sys.Date()`"
-url: 'https\://luca0330.github.io/gini/'
-github-repo: "luca0330/gini"
-cover-image: "cover.png"
+ | 
+ | University of Oxford 
+url: 'https\://23verse.github.io/gini'
+github-repo: "23verse/gini"
 description: "Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective."
 vignette: >
  %\VignetteIndexEntry{GINI Booklet}
@@ -95,7 +95,7 @@ git commit -m 'Update gini'
 git push origin master
 ##########################
 
-cd ~/Sites/XGR/MIMB
+cd ~/Sites/XGR/MIMB/Submission/Accept
 /System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py -o GINI_Figures.pdf Figure1.ai Figure2.ai Figure3.ai Figure4.ai Figure5.ai Figure6.ai Figure7.ai Figure8.ai Figure9.ai Figure10.ai
 
 
@@ -142,7 +142,7 @@ git push origin master
 
 # Overview {#index}
 
-We describe three showcases analysing human genetic interactions and/or gene expression data in human tissues, compatible with the concept of tidy data science (FIGURE \@ref(fig:tidy)). All done exclusively using the R one-liner, defined as a sequential pipeline of elementary functions chained together achieving a complex task. We will guide the users through step-by-step instructions on ([Case 1]) how to identify, visualise and interpret network modules of genetic interactions; ([Case 2]) how to identify and interpret tissue-specific genetic interactions; and ([Case 3]) how to carry out genetic interaction-based tissue clustering and differential interaction analysis. All three showcases are producible on its own, achieved in relatively short runtime (~20 min for Case 1, ~15 min for Case 2, and ~25 min for Case 3). We encourage the users to to run through these showcases before analysing their own datasets.
+As part of `Epistasis: Methods and Protocols`, [Methods in Molecular Biology - Springer](https://www.springer.com/series/7651), we describe three showcases analysing human genetic interactions and/or gene expression data in human tissues, compatible with the concept of tidy data science (FIGURE \@ref(fig:tidy)). All done exclusively using the R one-liner, defined as a sequential pipeline of elementary functions chained together achieving a complex task. We will guide the users through step-by-step instructions on ([Case 1]) how to identify, visualise and interpret network modules of genetic interactions; ([Case 2]) how to identify and interpret tissue-specific genetic interactions; and ([Case 3]) how to carry out genetic interaction-based tissue clustering and differential interaction analysis. All three showcases are producible on its own, achieved in relatively short runtime (~20 min for Case 1, ~15 min for Case 2, and ~25 min for Case 3). We encourage the users to to run through these showcases before analysing their own datasets.
 
 ```{r tidy, fig.cap="Collection of the main packages for tidy data science, with features and key functions briefed.", fig.width=8, fig.height=4, echo=FALSE, eval=TRUE, fig.align="center",out.width="100%"}
 library(png)

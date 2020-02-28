@@ -4,26 +4,26 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3.3 Case 3 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective</title>
-  <meta name="description" content="3.3 Case 3 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective." />
+  <title>Section 5 Case 3 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective</title>
+  <meta name="description" content="Section 5 Case 3 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective." />
   <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3.3 Case 3 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective" />
+  <meta property="og:title" content="Section 5 Case 3 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://luca0330.github.io/gini/" />
   <meta property="og:image" content="https://luca0330.github.io/gini/cover.png" />
-  <meta property="og:description" content="3.3 Case 3 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective." />
+  <meta property="og:description" content="Section 5 Case 3 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective." />
   <meta name="github-repo" content="luca0330/gini" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3.3 Case 3 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective" />
+  <meta name="twitter:title" content="Section 5 Case 3 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective" />
   
-  <meta name="twitter:description" content="3.3 Case 3 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective." />
+  <meta name="twitter:description" content="Section 5 Case 3 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective." />
   <meta name="twitter:image" content="https://luca0330.github.io/gini/cover.png" />
 
 
 
-<meta name="date" content="2020-02-27" />
+<meta name="date" content="2020-02-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -131,12 +131,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Overview</a></li>
 <li class="chapter" data-level="2" data-path="materials.html"><a href="materials.html"><i class="fa fa-check"></i><b>2</b> Materials</a></li>
-<li class="chapter" data-level="3" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>3</b> Methods</a><ul>
-<li class="chapter" data-level="3.1" data-path="case-1.html"><a href="case-1.html"><i class="fa fa-check"></i><b>3.1</b> Case 1</a></li>
-<li class="chapter" data-level="3.2" data-path="case-2.html"><a href="case-2.html"><i class="fa fa-check"></i><b>3.2</b> Case 2</a></li>
-<li class="chapter" data-level="3.3" data-path="case-3.html"><a href="case-3.html"><i class="fa fa-check"></i><b>3.3</b> Case 3</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="session-info.html"><a href="session-info.html"><i class="fa fa-check"></i><b>4</b> Session Info</a></li>
+<li class="chapter" data-level="3" data-path="case-1.html"><a href="case-1.html"><i class="fa fa-check"></i><b>3</b> Case 1</a></li>
+<li class="chapter" data-level="4" data-path="case-2.html"><a href="case-2.html"><i class="fa fa-check"></i><b>4</b> Case 2</a></li>
+<li class="chapter" data-level="5" data-path="case-3.html"><a href="case-3.html"><i class="fa fa-check"></i><b>5</b> Case 3</a></li>
+<li class="chapter" data-level="6" data-path="session-info.html"><a href="session-info.html"><i class="fa fa-check"></i><b>6</b> Session Info</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="_blank">Published with bookdown</a></li>
 
@@ -157,9 +155,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="case-3" class="section level2">
-<h2><span class="header-section-number">3.3</span> Case 3</h2>
-<p>In this case, we introduce a more advanced analysis workflow, showing how to identify tissue clusters (<code>Steps 2 and 7</code>) and differential interactions (<code>Steps 8-10</code>) based on the integration of genetic interactions with gene expression.</p>
+<div id="case-3" class="section level1">
+<h1><span class="header-section-number">Section 5</span> Case 3</h1>
+<p>In this case, we introduce a more advanced analysis workflow (FIGURE <a href="case-3.html#fig:3-schematic">5.1</a>), showing how to identify tissue clusters (<code>Steps 2 and 7</code>) and differential interactions (<code>Steps 8-10</code>) based on the integration of genetic interactions with gene expression.</p>
+<div class="figure" style="text-align: center"><span id="fig:3-schematic"></span>
+<img src="GINI_files/figure-html/3-schematic-1.png" alt="Schematic illustration of tissue clustering and differential analysis in lights of genetic interactions. Key steps labelled that are detailed below." width="100%" />
+<p class="caption">
+FIGURE 5.1: Schematic illustration of tissue clustering and differential analysis in lights of genetic interactions. Key steps labelled that are detailed below.
+</p>
+</div>
 <blockquote>
 <p><strong>Step 1: Load the packages and import human genetic interaction data as well as human tissue gene expression data (see <code>Materials</code> above).</strong></p>
 </blockquote>
@@ -226,7 +230,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb27-6" data-line-number="6"><span class="co"># &quot;SMTSD&quot; for tissues, &quot;x1&quot; and &quot;x2&quot; for 2D coordinates</span></a>
 <a class="sourceLine" id="cb27-7" data-line-number="7">res<span class="op">$</span>points <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">set_colnames</span>(<span class="kw">c</span>(<span class="st">&quot;x1&quot;</span>,<span class="st">&quot;x2&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>(<span class="dt">rownames=</span><span class="st">&quot;SMTSD&quot;</span>) -&gt;<span class="st"> </span>coord_tissues</a></code></pre></div>
 <blockquote>
-<p><strong>Step 6. Optimise the number of tissue clusters using <code>K-means</code>.</strong></p>
+<p><strong>Step 6. Optimise the number of tissue clusters using <code>K-means</code> (FIGURE <a href="case-3.html#fig:3-elbow">5.2</a> and FIGURE <a href="case-3.html#fig:3-cluster">5.3</a>).</strong></p>
 </blockquote>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="co"># perform K-means clustering using a series of cluster numbers (k)</span></a>
 <a class="sourceLine" id="cb28-2" data-line-number="2"><span class="co"># summarise clustering output</span></a>
@@ -245,8 +249,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb28-15" data-line-number="15"><span class="co"># tissues colored by clusters for each value of k</span></a>
 <a class="sourceLine" id="cb28-16" data-line-number="16"><span class="co"># note: the same color only means tissues within the same cluster</span></a>
 <a class="sourceLine" id="cb28-17" data-line-number="17">kclusts <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unnest</span>(augmented) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">k=</span><span class="kw">str_c</span>(<span class="st">&quot;k=&quot;</span>,k)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(x1,x2)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color=</span>.cluster)) <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>k,<span class="dt">ncol=</span><span class="dv">4</span>) <span class="op">+</span><span class="st"> </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="st">&quot;none&quot;</span>)</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:3-elbow"></span>
+<img src="GINI_files/figure-html/3-elbow-1.png" alt="Line plot showing the total variance within clusters against the predefined cluster numbers (k). The elbow is seen at k=5, that is, the optimal cluster number minimising within-cluster variance." width="30%" />
+<p class="caption">
+FIGURE 5.2: Line plot showing the total variance within clusters against the predefined cluster numbers (k). The elbow is seen at k=5, that is, the optimal cluster number minimising within-cluster variance.
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:3-cluster"></span>
+<img src="GINI_files/figure-html/3-cluster-1.png" alt="Dot plot of tissues color-coded by clusters. For example, at k=5, tissues are separated into five clusters and colored differently. Each tissue has 2D coordinates (x1 and x2) resulted from multidimensional scaling of interactions versus tissues matrix." width="80%" />
+<p class="caption">
+FIGURE 5.3: Dot plot of tissues color-coded by clusters. For example, at k=5, tissues are separated into five clusters and colored differently. Each tissue has 2D coordinates (x1 and x2) resulted from multidimensional scaling of interactions versus tissues matrix.
+</p>
+</div>
 <blockquote>
-<p><strong>Step 7. Visualise the optimal tissue clusters.</strong></p>
+<p><strong>Step 7. Visualise the optimal tissue clusters (FIGURE <a href="case-3.html#fig:3-k5">5.4</a>).</strong></p>
 </blockquote>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="co"># assign tissues to one of 5 clusters (optimal)</span></a>
 <a class="sourceLine" id="cb29-2" data-line-number="2"><span class="co"># return a tibble &quot;assignments&quot;</span></a>
@@ -260,6 +276,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb29-10" data-line-number="10">assignments <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="kw">str_detect</span>(SMTSD, <span class="st">&quot;Brain&quot;</span>)) -&gt;<span class="st"> </span>data</a>
 <a class="sourceLine" id="cb29-11" data-line-number="11"><span class="kw">ggplot</span>(assignments, <span class="kw">aes</span>(x1,x2,<span class="dt">shape=</span>.cluster)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb29-12" data-line-number="12"><span class="kw">geom_text_repel</span>(<span class="dt">data=</span>data, <span class="kw">aes</span>(<span class="dt">label=</span>SMTSD), <span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_light</span>()</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:3-k5"></span>
+<img src="GINI_files/figure-html/3-k5-1.png" alt="Dot plot of tissues at k=5, shaped by clusters. Brain-derived tissues are labelled to show that all brain tissues are clustered together (cluster 5) except two cerebellar tissues (cluster 4)." width="80%" />
+<p class="caption">
+FIGURE 5.4: Dot plot of tissues at k=5, shaped by clusters. Brain-derived tissues are labelled to show that all brain tissues are clustered together (cluster 5) except two cerebellar tissues (cluster 4).
+</p>
+</div>
 <blockquote>
 <p><strong>Step 8. Detect differential interactions between cluster 5 and other clusters.</strong></p>
 </blockquote>
@@ -286,7 +308,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb30-21" data-line-number="21"><span class="co"># return a tibble &quot;df_results&quot;</span></a>
 <a class="sourceLine" id="cb30-22" data-line-number="22"><span class="kw">tidy</span>(eb) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">nest</span>(<span class="dt">data=</span><span class="op">-</span>term) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">adjp=</span><span class="kw">map</span>(data,<span class="op">~</span><span class="kw">p.adjust</span>(.x<span class="op">$</span>p.value,<span class="dt">method=</span><span class="st">&quot;BH&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unnest</span>(<span class="kw">c</span>(data,adjp)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(adjp) -&gt;<span class="st"> </span>df_results</a></code></pre></div>
 <blockquote>
-<p><strong>Step 9. Draw volcano plot showing differential interactions.</strong></p>
+<p><strong>Step 9. Draw volcano plot showing differential interactions (FIGURE <a href="case-3.html#fig:3-volcano">5.5</a>).</strong></p>
 </blockquote>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="co"># coefficient estimate [log2(fold change)] vs adjusted p-values</span></a>
 <a class="sourceLine" id="cb31-2" data-line-number="2"><span class="co"># colored by empirical Bayes t-statistic, using the color scheme &quot;jet.both&quot;</span></a>
@@ -297,8 +319,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb31-7" data-line-number="7"><span class="co"># label the top 10 interactions abundant in cluster 5</span></a>
 <a class="sourceLine" id="cb31-8" data-line-number="8">df_results <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(estimate<span class="op">&gt;</span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">top_n</span>(<span class="dv">10</span>, <span class="op">-</span>adjp) -&gt;<span class="st"> </span>data</a>
 <a class="sourceLine" id="cb31-9" data-line-number="9">gg <span class="op">+</span><span class="st"> </span><span class="kw">geom_text_repel</span>(<span class="dt">data=</span>data, <span class="kw">aes</span>(<span class="dt">label=</span>gene), <span class="dt">color=</span><span class="st">&quot;black&quot;</span>, <span class="dt">size=</span><span class="dv">2</span>) </a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:3-volcano"></span>
+<img src="GINI_files/figure-html/3-volcano-1.png" alt="Volcano plot showing differential interactions. Colored by empirical Bayes t-statistic, labelled for the top 10 interactions abundant in cluster 5." width="80%" />
+<p class="caption">
+FIGURE 5.5: Volcano plot showing differential interactions. Colored by empirical Bayes t-statistic, labelled for the top 10 interactions abundant in cluster 5.
+</p>
+</div>
 <blockquote>
-<p><strong>Step 10. Construct and visualise a network of abundant interactions in cluster 5.</strong></p>
+<p><strong>Step 10. Construct and visualise a network of abundant interactions in cluster 5 (FIGURE <a href="case-3.html#fig:3-network">5.6</a>).</strong></p>
 </blockquote>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="co"># extract edges with adjp &lt; 0.01</span></a>
 <a class="sourceLine" id="cb32-2" data-line-number="2">df_results <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(estimate<span class="op">&gt;</span><span class="dv">0</span>, adjp<span class="op">&lt;</span><span class="fl">0.01</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -332,8 +360,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb32-30" data-line-number="30"><span class="co"># return a ggplot object &quot;gg_ab&quot;</span></a>
 <a class="sourceLine" id="cb32-31" data-line-number="31">ig_ab <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">xGGnetwork</span>(<span class="dt">node.label=</span><span class="st">&quot;label&quot;</span>, <span class="dt">node.label.size=</span><span class="fl">1.5</span>, <span class="dt">node.xcoord=</span><span class="st">&quot;xcoord&quot;</span>, <span class="dt">node.ycoord=</span><span class="st">&quot;ycoord&quot;</span>, <span class="dt">node.size=</span><span class="st">&quot;degree&quot;</span>, <span class="dt">node.size.range=</span><span class="kw">c</span>(<span class="fl">0.5</span>,<span class="dv">4</span>), <span class="dt">edge.color=</span><span class="st">&quot;lightblue&quot;</span>, <span class="dt">edge.arrow.gap=</span><span class="dv">0</span>) <span class="op">+</span><span class="st"> </span><span class="kw">guides</span>(<span class="dt">size=</span><span class="st">&quot;none&quot;</span>) -&gt;<span class="st"> </span>gg_up</a>
 <a class="sourceLine" id="cb32-32" data-line-number="32">gg_up</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:3-network"></span>
+<img src="GINI_files/figure-html/3-network-1.png" alt="Network visualisation of interactions abundant in cluster 5. Nodes sized by degree (i.e. the number of neighbors), and if having two or more neighbors, also labelled." width="80%" />
+<p class="caption">
+FIGURE 5.6: Network visualisation of interactions abundant in cluster 5. Nodes sized by degree (i.e. the number of neighbors), and if having two or more neighbors, also labelled.
+</p>
+</div>
 <blockquote>
-<p><strong>Step 11. Perform pathway enrichment analysis for genes involved in abundant interactions in cluster 5.</strong></p>
+<p><strong>Step 11. Perform KEGG pathway enrichment analysis for genes involved in abundant interactions in cluster 5 (FIGURE <a href="case-3.html#fig:3-kegg">5.7</a>).</strong></p>
 </blockquote>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="co"># define the test background (all interacting genes)</span></a>
 <a class="sourceLine" id="cb33-2" data-line-number="2">df_results <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate_rows</span>(gene, <span class="dt">sep=</span><span class="st">&quot;&lt;-&gt;&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -346,8 +380,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb33-9" data-line-number="9"><span class="co"># visualise enriched pathways faceted by category</span></a>
 <a class="sourceLine" id="cb33-10" data-line-number="10"><span class="co"># label up to top 3 per category</span></a>
 <a class="sourceLine" id="cb33-11" data-line-number="11">eTerm_kegg <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">xEnrichViewer</span>(<span class="st">&quot;all&quot;</span>, <span class="dt">detail=</span>T) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">group=</span>namespace) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(group <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Cellular Process&quot;</span>,<span class="st">&quot;Environmental Process&quot;</span>,<span class="st">&quot;Human Diseases&quot;</span>,<span class="st">&quot;Organismal Systems&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">xEnrichDotplot</span>(<span class="dt">label.top=</span><span class="dv">3</span>) <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>group, <span class="dt">ncol=</span><span class="dv">4</span>)</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:3-kegg"></span>
+<img src="GINI_files/figure-html/3-kegg-1.png" alt="Pathway analysis of genes involved in interactions abundant in cluster 5. Based on KEGG pathways grouped into four categories. The dot plot is shown separately for each category, with the top 3 enriched pathways labelled for each category using one-sided Fisher's exact test." width="100%" />
+<p class="caption">
+FIGURE 5.7: Pathway analysis of genes involved in interactions abundant in cluster 5. Based on KEGG pathways grouped into four categories. The dot plot is shown separately for each category, with the top 3 enriched pathways labelled for each category using one-sided Fisher’s exact test.
+</p>
+</div>
 <blockquote>
-<p><strong>Step 12. Conduct evolutionary analysis for genes involved in abundant interactions in cluster 5.</strong></p>
+<p><strong>Step 12. Conduct evolutionary analysis for genes involved in abundant interactions in cluster 5 (FIGURE <a href="case-3.html#fig:3-evolution">5.8</a>).</strong></p>
 </blockquote>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="co"># define the test background (all interacting genes)</span></a>
 <a class="sourceLine" id="cb34-2" data-line-number="2">df_results <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate_rows</span>(gene,<span class="dt">sep=</span><span class="st">&quot;&lt;-&gt;&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -373,8 +413,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb34-22" data-line-number="22"><span class="co"># visualise together the forest plot and the table together</span></a>
 <a class="sourceLine" id="cb34-23" data-line-number="23"><span class="co"># using the package &quot;patchwork&quot;, a composer of plots </span></a>
 <a class="sourceLine" id="cb34-24" data-line-number="24">gg_psg <span class="op">+</span><span class="st"> </span>gt_psg <span class="op">+</span><span class="st"> </span><span class="kw">plot_layout</span>(<span class="dt">ncol=</span><span class="dv">2</span>, <span class="dt">widths=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:3-evolution"></span>
+<img src="GINI_files/figure-html/3-evolution-1.png" alt="Evolutionary analysis for genes involved in abundant interactions in cluster 5. Left, the forest plot showing phylostrata (ancestors; ordered by evolutionary history) enriched and depleted based on two-sided Fisher's exact test. Right, a table listing genes first created at the ancestors (enriched)." width="100%" />
+<p class="caption">
+FIGURE 5.8: Evolutionary analysis for genes involved in abundant interactions in cluster 5. Left, the forest plot showing phylostrata (ancestors; ordered by evolutionary history) enriched and depleted based on two-sided Fisher’s exact test. Right, a table listing genes first created at the ancestors (enriched).
+</p>
 </div>
-<!-- </div> -->
+</div>
             </section>
 
           </div>

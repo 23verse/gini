@@ -3,7 +3,7 @@ documentclass: book
 classoption: oneside
 title: "Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective"
 author: |
- | Lulu Jiang (<lulu.jiang@dpag.ox.ac.uk>), Hai Fang (<23versify@gmail.com>)
+ | [Lulu Jiang](mailto:lulu.jiang@dpag.ox.ac.uk), [Hai Fang](mailto:23versify@gmail.com)
 date: "`r Sys.Date()`"
 url: 'https\://luca0330.github.io/gini/'
 github-repo: "luca0330/gini"
@@ -142,7 +142,14 @@ git push origin master
 
 # Overview {#index}
 
-We describe three showcases analysing human genetic interactions and/or gene expression data in human tissues. All done exclusively using R one-liner, defined as a sequential pipeline of elementary functions chained together achieving a complex task. We will guide the users through step-by-step instructions on (case 1) how to identify, visualize and interpret network modules of genetic interactions; (case 2) how to identify and interpret tissue-specific genetic interactions; and (case 3) how to carry out genetic interaction-based tissue clustering and differential interaction analysis. All three showcases are producible on its own right, achieved in relatively short runtime (~20 min for case 1, ~15 min for case 2, and ~25 min for case 3). We encourage the users to run through demos first before analysing their own datasets.
+We describe three showcases analysing human genetic interactions and/or gene expression data in human tissues, compatible with the concept of tidy data science (FIGURE \@ref(fig:tidy)). All done exclusively using the R one-liner, defined as a sequential pipeline of elementary functions chained together achieving a complex task. We will guide the users through step-by-step instructions on ([Case 1]) how to identify, visualise and interpret network modules of genetic interactions; ([Case 2]) how to identify and interpret tissue-specific genetic interactions; and ([Case 3]) how to carry out genetic interaction-based tissue clustering and differential interaction analysis. All three showcases are producible on its own, achieved in relatively short runtime (~20 min for Case 1, ~15 min for Case 2, and ~25 min for Case 3). We encourage the users to to run through these showcases before analysing their own datasets.
+
+```{r tidy, fig.cap="Collection of the main packages for tidy data science, with features and key functions briefed.", fig.width=8, fig.height=4, echo=FALSE, eval=TRUE, fig.align="center",out.width="100%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.GINI.tidy.png")
+grid.raster(img)
+```
 
 # Materials
 
@@ -190,9 +197,7 @@ We obtained human tissue RNA-seq datasets (gene-centric expression level quantif
 GTEx_V8_TPM_boxplot
 ```
 
-# Methods
-
-## Case 1
+# Case 1
 
 We provide the step-by-step instructions on how to identify modular/community structure (`Step 2`), the essential to subsequently interpret the genetic interaction network, both visually intuitive and scientifically sound. `Steps 3-6` detail how to determine 2D coordinates of the network respecting modular structure, and how to add the hull and labelling for each of the modules, while `Steps 7-12` show how to perform pathway analysis of modules for knowledge discovery and interpretation.
 
@@ -293,7 +298,7 @@ img <- readPNG("booklet.GINI.1-module.png")
 grid.raster(img)
 ```
 
-> **Step 7. Summarise the number of genes found in each module.**
+> **Step 7. Summarise the number of genes found in each module (FIGURE \@ref(fig:1-number)).**
 ```{r, echo=TRUE}
 # extract the number of genes per module
 ig %>% igraph::as_data_frame("vertices") %>% count(modules) -> data
@@ -303,6 +308,13 @@ data %>% arrange(desc(n)) %>% mutate(modules=modules %>% as.character() %>% fct_
 
 # draw the bar plot
 data %>% ggplot(aes(modules,n)) + geom_bar(stat="identity", fill="steelblue") + scale_y_log10(limits=c(1,1000)) + coord_flip() + theme_minimal()
+```
+
+```{r 1-number, fig.cap="Bar plot of the number of genes across modules.", fig.width=3, fig.height=3, echo=FALSE, eval=TRUE, fig.align="center",out.width="40%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.GINI.1-number.png")
+grid.raster(img)
 ```
 
 > **Step 8. Perform pathway enrichment analysis for genes in each module.**
@@ -333,7 +345,7 @@ mutate(ladder=map(eTerm, ~xEnrichLadder(.x))) -> df_nested
 df_nested
 ```
 
-> **Step 9. Explore enrichment results for a module.**
+> **Step 9. Explore enrichment results for a module (FIGURE \@ref(fig:1-module3)).**
 ```{r, echo=TRUE}
 # print the content of the eTerm object for module 3
 # note: the 2nd row of the tibble "df_nested"
@@ -345,6 +357,14 @@ df_nested$forest[[2]]
 # visualise as a dot plot for module 3
 df_nested$ladder[[2]]
 ```
+
+```{r 1-module3, fig.cap="Pathway analysis of network modules. Top: a tibble designed to capture module-centric information, including input data and the results sequentially generated along the analysis. The results for module 3 are illustrated including the eTerm object, the forest plot, and the ladder plot", fig.width=7, fig.height=8, echo=FALSE, eval=TRUE, fig.align="center",out.width="100%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.GINI.1-module3.png")
+grid.raster(img)
+```
+
 
 > **Step 10. Prepare the output for all modules.**
 ```{r, echo=TRUE}
@@ -368,7 +388,7 @@ df_output
 df_output %>% write_delim("output.txt", delim="\t")
 ```
 
-> **Step 12. Visualise and compare enrichment results between modules.**
+> **Step 12. Visualise and compare enrichment results between modules (FIGURE \@ref(fig:1-forest) and FIGURE \@ref(fig:1-chord)).**
 ```{r, echo=TRUE}
 # rename the column "modules" into "group" in the tibble "df_output"
 df_output %>% rename(group=modules) %>% as.data.frame() -> df_output
@@ -384,8 +404,22 @@ gg_forest
 df_output %>% xEnrichChord(top_num=5, legend=F, text.size=0.4, big.gap=90)
 ```
 
+```{r 1-forest, fig.cap="Forest plot of up to 5 the most enriched pathways (FDR<0.05) per module.", fig.width=8, fig.height=3, echo=FALSE, eval=TRUE, fig.align="center",out.width="100%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.GINI.1-forest.png")
+grid.raster(img)
+```
 
-## Case 2
+```{r 1-chord, fig.cap="Chord plot of up to 5 the most enriched pathways (FDR<0.05; the left-half part) per module (right-half part), with link thickness proportional to the enrichment Z-scores.", fig.width=5, fig.height=4, echo=FALSE, eval=TRUE, fig.align="center",out.width="70%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.GINI.1-chord.png")
+grid.raster(img)
+```
+
+
+# Case 2
 
 We illustrate how to perform integrative analysis combining genetic interactions with gene expression data; such strategy is computationally promising given the current technological limits in experimentally generating tissue-specific interactions on a genome scale, particularly for humans. One way doing so is to trim the generic genetic interactions to node genes expressed in a specific tissue. Such trimming allows identification of a genetic interaction network in the whole blood (`Step 2`), from which a subnetwork with a desired number of interconnected genes is further identified that tend to be highly expressed (`Step 3`). We also demonstrate how to highlight the subnetwork within the parent network (`Step 4`). For the interpretation of the subnetwork identified, we illustrate how to perform phenotype enrichment analysis using mammalian phenotype ontology, a tree-like structure containing well-defined terms that are used to annotate mouse knock-out phenotypes (`Step 6`). 
 
@@ -411,7 +445,7 @@ ig.BioGRID_genetic %>% igraph::as_data_frame("edges") %>% as_tibble() -> edges
 GTEx_V8_TPM_boxplot <- xRDataLoader("GTEx_V8_TPM_boxplot", guid=guid)
 ```
 
-> **Step 2. Identify a genetic interaction network in the whole blood.**
+> **Step 2. Identify a genetic interaction network in the whole blood (FIGURE \@ref(fig:2-parent)).**
 
 ```{r, echo=TRUE}
 # extract genes expressed in the whole blood (TPM>=1 in all samples analysed)
@@ -447,7 +481,15 @@ guides(size="none") -> gg_blood
 gg_blood
 ```
 
-> **Step 3: Further identify a subnetwork with highly expressed genes.**
+```{r 2-parent, fig.cap="Network visualisation of genetic interactions containing 756 nodes/genes (expressed in the human whole blood) and 725 edges (notably, not all interconnected). Nodes sized by degree (i.e. the number of interacting neighbors).", fig.width=5, fig.height=5, echo=FALSE, eval=TRUE, fig.align="center",out.width="60%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.GINI.2-parent.png")
+grid.raster(img)
+```
+
+
+> **Step 3: Further identify a subnetwork with highly expressed genes (FIGURE \@ref(fig:2-subnet)).**
 
 ```{r, echo=TRUE}
 # weight nodes by expression (TPM), the higher the more weight
@@ -480,6 +522,14 @@ ig_subg %>% xGGnetwork(node.label="name", node.label.size=2, node.label.color="b
 gg_subg
 ```
 
+```{r 2-subnet, fig.cap="Illustration of a subnetwork identified from the parent network, ensuring the subnetwork has a desired number (here ~30) of interconnected nodes/genes that tend to be highly expressed in the whole blood. Nodes colored by the median expression level, that is, transcripts per million (TPM).", fig.width=5, fig.height=5, echo=FALSE, eval=TRUE, fig.align="center",out.width="60%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.GINI.2-subnet.png")
+grid.raster(img)
+```
+
+
 > **Step 4. Highlight the subnetwork within the parent network.**
 
 ```{r, echo=TRUE}
@@ -507,7 +557,15 @@ ig_blood2 %>% xGGnetwork(node.xcoord="xcoord", node.ycoord="ycoord", , node.size
 gg_blood2
 ```
 
-> **Step 5. Display expression levels for genes in the subnetwork.**
+```{r 2-highlight, fig.cap="The parent network highlighted with the subnetwork. The layout (node coordinates) preserved.", fig.width=5, fig.height=5, echo=FALSE, eval=TRUE, fig.align="center",out.width="60%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.GINI.2-highlight.png")
+grid.raster(img)
+```
+
+
+> **Step 5. Display expression levels for genes in the subnetwork (FIGURE \@ref(fig:2-boxplot)).**
 ```{r, echo=TRUE}
 # extract whole blood expression data for genes in the subnetwork
 GTEx_V8_TPM_boxplot %>% 
@@ -520,7 +578,15 @@ data %>% arrange(middle) %>% mutate(Symbol=fct_inorder(Symbol)) -> data
 data %>% ggplot(aes(x=Symbol)) + geom_boxplot(stat="identity", aes(ymin=ymin,lower=lower,middle=middle,upper=upper,ymax=ymax), fill="green3") + ylab("TPM") + xlab("") + scale_y_log10() + coord_flip() + theme_minimal()
 ```
 
-> **Step 6. Perform phenotype enrichment analysis for genes in the subnetwork.**
+```{r 2-boxplot, fig.cap="Boxplot of genes in the subnetwork, showing expression distribution across the whole blood samples.", fig.width=5, fig.height=5, echo=FALSE, eval=TRUE, fig.align="center",out.width="60%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.GINI.2-boxplot.png")
+grid.raster(img)
+```
+
+
+> **Step 6. Perform phenotype enrichment analysis for genes in the subnetwork (FIGURE \@ref(fig:2-mpo)).**
 ```{r, echo=TRUE}
 # define the test background (all genes expressed in the whole blood)
 GTEx_V8_TPM_boxplot %>% filter(SMTSD=="Whole Blood", ymin>=1) %>% 
@@ -534,10 +600,25 @@ V(ig_subg)$name %>% xEnricherGenes(background=background, ontology="MP", guid=gu
 eTerm %>% xEnrichGGraph(fixed=F, node.label.direction="leftright", slim=c(1,3))
 ```
 
+```{r 2-mpo, fig.cap="Circular illustration of mouse phenotypes enriched in subnetwork genes. Based on mammalian phenotype ontology used for annotating mouse knockout genes.", fig.width=6, fig.height=4, echo=FALSE, eval=TRUE, fig.align="center",out.width="100%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.GINI.2-mpo.png")
+grid.raster(img)
+```
 
-## Case 3
 
-In this case, we introduce a more advanced analysis workflow, showing how to identify tissue clusters (`Steps 2 and 7`) and differential interactions (`Steps 8-10`) based on the integration of genetic interactions with gene expression. 
+# Case 3
+
+In this case, we introduce a more advanced analysis workflow (FIGURE \@ref(fig:3-schematic)), showing how to identify tissue clusters (`Steps 2 and 7`) and differential interactions (`Steps 8-10`) based on the integration of genetic interactions with gene expression. 
+
+```{r 3-schematic, fig.cap="Schematic illustration of tissue clustering and differential analysis in lights of genetic interactions. Key steps labelled that are detailed below.", fig.width=6, fig.height=3, echo=FALSE, eval=TRUE, fig.align="center",out.width="100%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.GINI.3-schematic.png")
+grid.raster(img)
+```
+
 
 > **Step 1: Load the packages and import human genetic interaction data as well as human tissue gene expression data (see `Materials` above).**
 
@@ -614,7 +695,7 @@ t(mat) %>% dist() %>% cmdscale(2, eig=T) -> res
 res$points %>% set_colnames(c("x1","x2")) %>% as_tibble(rownames="SMTSD") -> coord_tissues
 ```
 
-> **Step 6. Optimise the number of tissue clusters using `K-means`.**
+> **Step 6. Optimise the number of tissue clusters using `K-means` (FIGURE \@ref(fig:3-elbow) and FIGURE \@ref(fig:3-cluster)).**
 
 ```{r, eval=F, include=TRUE}
 # perform K-means clustering using a series of cluster numbers (k)
@@ -636,7 +717,22 @@ kclusts %>% unnest(glanced) %>% ggplot(aes(k, tot.withinss)) + geom_line()
 kclusts %>% unnest(augmented) %>% mutate(k=str_c("k=",k)) %>% ggplot(aes(x1,x2)) + geom_point(aes(color=.cluster)) + facet_wrap(~k,ncol=4) + guides(color="none")
 ```
 
-> **Step 7. Visualise the optimal tissue clusters.**
+```{r 3-elbow, fig.cap="Line plot showing the total variance within clusters against the predefined cluster numbers (k). The elbow is seen at k=5, that is, the optimal cluster number minimising within-cluster variance.", fig.width=2.5, fig.height=3, echo=FALSE, eval=TRUE, fig.align="center",out.width="30%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.GINI.3-elbow.png")
+grid.raster(img)
+```
+
+```{r 3-cluster, fig.cap="Dot plot of tissues color-coded by clusters. For example, at k=5, tissues are separated into five clusters and colored differently. Each tissue has 2D coordinates (x1 and x2) resulted from multidimensional scaling of interactions versus tissues matrix.", fig.width=8, fig.height=5, echo=FALSE, eval=TRUE, fig.align="center",out.width="80%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.GINI.3-cluster.png")
+grid.raster(img)
+```
+
+
+> **Step 7. Visualise the optimal tissue clusters (FIGURE \@ref(fig:3-k5)).**
 
 ```{r, eval=F, include=TRUE}
 # assign tissues to one of 5 clusters (optimal)
@@ -652,6 +748,14 @@ assignments %>% filter(str_detect(SMTSD, "Brain")) -> data
 ggplot(assignments, aes(x1,x2,shape=.cluster)) + geom_point() + 
 geom_text_repel(data=data, aes(label=SMTSD), size=2) + theme_light()
 ```
+
+```{r 3-k5, fig.cap="Dot plot of tissues at k=5, shaped by clusters. Brain-derived tissues are labelled to show that all brain tissues are clustered together (cluster 5) except two cerebellar tissues (cluster 4).", fig.width=8, fig.height=6, echo=FALSE, eval=TRUE, fig.align="center",out.width="80%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.GINI.3-k5.png")
+grid.raster(img)
+```
+
 
 > **Step 8. Detect differential interactions between cluster 5 and other clusters.**
 
@@ -680,7 +784,7 @@ eb <- eBayes(fit2)
 tidy(eb) %>% nest(data=-term) %>% mutate(adjp=map(data,~p.adjust(.x$p.value,method="BH"))) %>% unnest(c(data,adjp)) %>% arrange(adjp) -> df_results
 ```
 
-> **Step 9. Draw volcano plot showing differential interactions.**
+> **Step 9. Draw volcano plot showing differential interactions (FIGURE \@ref(fig:3-volcano)).**
 
 ```{r, eval=F, include=TRUE}
 # coefficient estimate [log2(fold change)] vs adjusted p-values
@@ -694,7 +798,15 @@ df_results %>% filter(estimate>0) %>% top_n(10, -adjp) -> data
 gg + geom_text_repel(data=data, aes(label=gene), color="black", size=2) 
 ```
 
-> **Step 10. Construct and visualise a network of abundant interactions in cluster 5.**
+```{r 3-volcano, fig.cap="Volcano plot showing differential interactions. Colored by empirical Bayes t-statistic, labelled for the top 10 interactions abundant in cluster 5.", fig.width=8, fig.height=8, echo=FALSE, eval=TRUE, fig.align="center",out.width="80%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.GINI.3-volcano.png")
+grid.raster(img)
+```
+
+
+> **Step 10. Construct and visualise a network of abundant interactions in cluster 5 (FIGURE \@ref(fig:3-network)).**
 
 ```{r, eval=F, include=TRUE}
 # extract edges with adjp < 0.01
@@ -731,7 +843,15 @@ ig_ab %>% xGGnetwork(node.label="label", node.label.size=1.5, node.xcoord="xcoor
 gg_up
 ```
 
-> **Step 11. Perform pathway enrichment analysis for genes involved in abundant interactions in cluster 5.**
+```{r 3-network, fig.cap="Network visualisation of interactions abundant in cluster 5. Nodes sized by degree (i.e. the number of neighbors), and if having two or more neighbors, also labelled.", fig.width=8, fig.height=7, echo=FALSE, eval=TRUE, fig.align="center",out.width="80%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.GINI.3-network.png")
+grid.raster(img)
+```
+
+
+> **Step 11. Perform KEGG pathway enrichment analysis for genes involved in abundant interactions in cluster 5 (FIGURE \@ref(fig:3-kegg)).**
 
 ```{r, eval=F, include=TRUE}
 # define the test background (all interacting genes)
@@ -747,7 +867,15 @@ V(ig_ab)$name %>% xEnricherGenes(background=background, ontology="KEGG", guid=gu
 eTerm_kegg %>% xEnrichViewer("all", detail=T) %>% rename(group=namespace) %>% filter(group %in% c("Cellular Process","Environmental Process","Human Diseases","Organismal Systems")) %>% xEnrichDotplot(label.top=3) + facet_wrap(~group, ncol=4)
 ```
 
-> **Step 12. Conduct evolutionary analysis for genes involved in abundant interactions in cluster 5.**
+```{r 3-kegg, fig.cap="Pathway analysis of genes involved in interactions abundant in cluster 5. Based on KEGG pathways grouped into four categories. The dot plot is shown separately for each category, with the top 3 enriched pathways labelled for each category using one-sided Fisher's exact test.", fig.width=8, fig.height=2.5, echo=FALSE, eval=TRUE, fig.align="center",out.width="100%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.GINI.3-kegg.png")
+grid.raster(img)
+```
+
+
+> **Step 12. Conduct evolutionary analysis for genes involved in abundant interactions in cluster 5 (FIGURE \@ref(fig:3-evolution)).**
 
 ```{r, eval=F, include=TRUE}
 # define the test background (all interacting genes)
@@ -774,6 +902,13 @@ select(Ancestor,Genes) %>% tableGrob(rows=NULL,theme=ttheme_default(base_size=6)
 # visualise together the forest plot and the table together
 # using the package "patchwork", a composer of plots 
 gg_psg + gt_psg + plot_layout(ncol=2, widths=c(1,3))
+```
+
+```{r 3-evolution, fig.cap="Evolutionary analysis for genes involved in abundant interactions in cluster 5. Left, the forest plot showing phylostrata (ancestors; ordered by evolutionary history) enriched and depleted based on two-sided Fisher's exact test. Right, a table listing genes first created at the ancestors (enriched).", fig.width=8, fig.height=2, echo=FALSE, eval=TRUE, fig.align="center",out.width="100%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.GINI.3-evolution.png")
+grid.raster(img)
 ```
 
 # Session Info

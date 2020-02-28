@@ -1,6 +1,6 @@
 bookdown::gitbook:
   highlight: "default"
-  split_by: "section"
+  split_by: "chapter"
   self_contained: no
   config:
     toc:

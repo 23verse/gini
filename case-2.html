@@ -4,26 +4,26 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3.2 Case 2 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective</title>
-  <meta name="description" content="3.2 Case 2 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective." />
+  <title>Section 4 Case 2 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective</title>
+  <meta name="description" content="Section 4 Case 2 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective." />
   <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3.2 Case 2 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective" />
+  <meta property="og:title" content="Section 4 Case 2 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://luca0330.github.io/gini/" />
   <meta property="og:image" content="https://luca0330.github.io/gini/cover.png" />
-  <meta property="og:description" content="3.2 Case 2 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective." />
+  <meta property="og:description" content="Section 4 Case 2 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective." />
   <meta name="github-repo" content="luca0330/gini" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3.2 Case 2 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective" />
+  <meta name="twitter:title" content="Section 4 Case 2 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective" />
   
-  <meta name="twitter:description" content="3.2 Case 2 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective." />
+  <meta name="twitter:description" content="Section 4 Case 2 | Genetic Interaction Network Interpretation (GINI): A Tidy Data Science Perspective." />
   <meta name="twitter:image" content="https://luca0330.github.io/gini/cover.png" />
 
 
 
-<meta name="date" content="2020-02-27" />
+<meta name="date" content="2020-02-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -131,12 +131,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Overview</a></li>
 <li class="chapter" data-level="2" data-path="materials.html"><a href="materials.html"><i class="fa fa-check"></i><b>2</b> Materials</a></li>
-<li class="chapter" data-level="3" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>3</b> Methods</a><ul>
-<li class="chapter" data-level="3.1" data-path="case-1.html"><a href="case-1.html"><i class="fa fa-check"></i><b>3.1</b> Case 1</a></li>
-<li class="chapter" data-level="3.2" data-path="case-2.html"><a href="case-2.html"><i class="fa fa-check"></i><b>3.2</b> Case 2</a></li>
-<li class="chapter" data-level="3.3" data-path="case-3.html"><a href="case-3.html"><i class="fa fa-check"></i><b>3.3</b> Case 3</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="session-info.html"><a href="session-info.html"><i class="fa fa-check"></i><b>4</b> Session Info</a></li>
+<li class="chapter" data-level="3" data-path="case-1.html"><a href="case-1.html"><i class="fa fa-check"></i><b>3</b> Case 1</a></li>
+<li class="chapter" data-level="4" data-path="case-2.html"><a href="case-2.html"><i class="fa fa-check"></i><b>4</b> Case 2</a></li>
+<li class="chapter" data-level="5" data-path="case-3.html"><a href="case-3.html"><i class="fa fa-check"></i><b>5</b> Case 3</a></li>
+<li class="chapter" data-level="6" data-path="session-info.html"><a href="session-info.html"><i class="fa fa-check"></i><b>6</b> Session Info</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="_blank">Published with bookdown</a></li>
 
@@ -157,8 +155,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="case-2" class="section level2">
-<h2><span class="header-section-number">3.2</span> Case 2</h2>
+<div id="case-2" class="section level1">
+<h1><span class="header-section-number">Section 4</span> Case 2</h1>
 <p>We illustrate how to perform integrative analysis combining genetic interactions with gene expression data; such strategy is computationally promising given the current technological limits in experimentally generating tissue-specific interactions on a genome scale, particularly for humans. One way doing so is to trim the generic genetic interactions to node genes expressed in a specific tissue. Such trimming allows identification of a genetic interaction network in the whole blood (<code>Step 2</code>), from which a subnetwork with a desired number of interconnected genes is further identified that tend to be highly expressed (<code>Step 3</code>). We also demonstrate how to highlight the subnetwork within the parent network (<code>Step 4</code>). For the interpretation of the subnetwork identified, we illustrate how to perform phenotype enrichment analysis using mammalian phenotype ontology, a tree-like structure containing well-defined terms that are used to annotate mouse knock-out phenotypes (<code>Step 6</code>).</p>
 <blockquote>
 <p><strong>Step 1: Load the packages and import human genetic interaction data as well as gene expression data (see <code>Materials</code>).</strong></p>
@@ -181,7 +179,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb17-16" data-line-number="16"><span class="co"># import gene expression data</span></a>
 <a class="sourceLine" id="cb17-17" data-line-number="17">GTEx_V8_TPM_boxplot &lt;-<span class="st"> </span><span class="kw">xRDataLoader</span>(<span class="st">&quot;GTEx_V8_TPM_boxplot&quot;</span>, <span class="dt">guid=</span>guid)</a></code></pre></div>
 <blockquote>
-<p><strong>Step 2. Identify a genetic interaction network in the whole blood.</strong></p>
+<p><strong>Step 2. Identify a genetic interaction network in the whole blood (FIGURE <a href="case-2.html#fig:2-parent">4.1</a>).</strong></p>
 </blockquote>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="co"># extract genes expressed in the whole blood (TPM&gt;=1 in all samples analysed)</span></a>
 <a class="sourceLine" id="cb18-2" data-line-number="2"><span class="co"># also extract median TPM among all blood samples</span></a>
@@ -214,8 +212,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb18-29" data-line-number="29">ig_blood <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">xGGnetwork</span>(<span class="dt">node.xcoord=</span><span class="st">&quot;xcoord&quot;</span>, <span class="dt">node.ycoord=</span><span class="st">&quot;ycoord&quot;</span>, <span class="dt">node.size=</span><span class="st">&quot;degree&quot;</span>, <span class="dt">node.size.range=</span><span class="kw">c</span>(<span class="fl">0.5</span>,<span class="fl">2.5</span>), <span class="dt">edge.color=</span><span class="st">&quot;lightblue1&quot;</span>, <span class="dt">edge.arrow.gap=</span><span class="dv">0</span>) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb18-30" data-line-number="30"><span class="kw">guides</span>(<span class="dt">size=</span><span class="st">&quot;none&quot;</span>) -&gt;<span class="st"> </span>gg_blood</a>
 <a class="sourceLine" id="cb18-31" data-line-number="31">gg_blood</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:2-parent"></span>
+<img src="GINI_files/figure-html/2-parent-1.png" alt="Network visualisation of genetic interactions containing 756 nodes/genes (expressed in the human whole blood) and 725 edges (notably, not all interconnected). Nodes sized by degree (i.e. the number of interacting neighbors)." width="60%" />
+<p class="caption">
+FIGURE 4.1: Network visualisation of genetic interactions containing 756 nodes/genes (expressed in the human whole blood) and 725 edges (notably, not all interconnected). Nodes sized by degree (i.e. the number of interacting neighbors).
+</p>
+</div>
 <blockquote>
-<p><strong>Step 3: Further identify a subnetwork with highly expressed genes.</strong></p>
+<p><strong>Step 3: Further identify a subnetwork with highly expressed genes (FIGURE <a href="case-2.html#fig:2-subnet">4.2</a>).</strong></p>
 </blockquote>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="co"># weight nodes by expression (TPM), the higher the more weight</span></a>
 <a class="sourceLine" id="cb19-2" data-line-number="2"><span class="co"># transform the weight into a p-value-like quantity</span></a>
@@ -245,6 +249,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb19-26" data-line-number="26"><span class="co"># return a ggplot object &quot;gg_subg&quot;</span></a>
 <a class="sourceLine" id="cb19-27" data-line-number="27">ig_subg <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">xGGnetwork</span>(<span class="dt">node.label=</span><span class="st">&quot;name&quot;</span>, <span class="dt">node.label.size=</span><span class="dv">2</span>, <span class="dt">node.label.color=</span><span class="st">&quot;black&quot;</span>, <span class="dt">node.label.force=</span><span class="fl">0.05</span>, <span class="dt">node.xcoord=</span><span class="st">&quot;xcoord&quot;</span>, <span class="dt">node.ycoord=</span><span class="st">&quot;ycoord&quot;</span>, <span class="dt">node.color=</span><span class="st">&quot;TPM&quot;</span>, <span class="dt">node.color.title=</span><span class="kw">expression</span>(log[<span class="dv">10</span>](<span class="st">&quot;median TPM&quot;</span>)), <span class="dt">colormap=</span><span class="st">&quot;brewer.Greens&quot;</span>, <span class="dt">zlim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">4</span>), <span class="dt">edge.color=</span><span class="st">&quot;lightblue&quot;</span>, <span class="dt">edge.arrow.gap=</span><span class="dv">0</span>) -&gt;<span class="st"> </span>gg_subg</a>
 <a class="sourceLine" id="cb19-28" data-line-number="28">gg_subg</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:2-subnet"></span>
+<img src="GINI_files/figure-html/2-subnet-1.png" alt="Illustration of a subnetwork identified from the parent network, ensuring the subnetwork has a desired number (here ~30) of interconnected nodes/genes that tend to be highly expressed in the whole blood. Nodes colored by the median expression level, that is, transcripts per million (TPM)." width="60%" />
+<p class="caption">
+FIGURE 4.2: Illustration of a subnetwork identified from the parent network, ensuring the subnetwork has a desired number (here ~30) of interconnected nodes/genes that tend to be highly expressed in the whole blood. Nodes colored by the median expression level, that is, transcripts per million (TPM).
+</p>
+</div>
 <blockquote>
 <p><strong>Step 4. Highlight the subnetwork within the parent network.</strong></p>
 </blockquote>
@@ -270,8 +280,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb20-20" data-line-number="20"><span class="co"># return a ggplot object &quot;gg_blood2&quot;</span></a>
 <a class="sourceLine" id="cb20-21" data-line-number="21">ig_blood2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">xGGnetwork</span>(<span class="dt">node.xcoord=</span><span class="st">&quot;xcoord&quot;</span>, <span class="dt">node.ycoord=</span><span class="st">&quot;ycoord&quot;</span>, , <span class="dt">node.size=</span><span class="st">&quot;degree&quot;</span>, <span class="dt">node.size.range=</span><span class="kw">c</span>(<span class="fl">0.5</span>,<span class="fl">2.5</span>), <span class="dt">node.color=</span><span class="st">&quot;mark&quot;</span>, <span class="dt">colormap=</span><span class="st">&quot;orange-darkgreen&quot;</span>, <span class="dt">node.color.alpha=</span><span class="fl">0.7</span>, <span class="dt">edge.color=</span><span class="st">&quot;color&quot;</span>, <span class="dt">edge.color.alpha=</span><span class="st">&quot;color.alpha&quot;</span>, <span class="dt">edge.arrow.gap=</span><span class="dv">0</span>) <span class="op">+</span><span class="st"> </span><span class="kw">guides</span>(<span class="dt">size=</span><span class="st">&quot;none&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="st">&quot;none&quot;</span>) -&gt;<span class="st"> </span>gg_blood2</a>
 <a class="sourceLine" id="cb20-22" data-line-number="22">gg_blood2</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:2-highlight"></span>
+<img src="GINI_files/figure-html/2-highlight-1.png" alt="The parent network highlighted with the subnetwork. The layout (node coordinates) preserved." width="60%" />
+<p class="caption">
+FIGURE 4.3: The parent network highlighted with the subnetwork. The layout (node coordinates) preserved.
+</p>
+</div>
 <blockquote>
-<p><strong>Step 5. Display expression levels for genes in the subnetwork.</strong></p>
+<p><strong>Step 5. Display expression levels for genes in the subnetwork (FIGURE <a href="case-2.html#fig:2-boxplot">4.4</a>).</strong></p>
 </blockquote>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="co"># extract whole blood expression data for genes in the subnetwork</span></a>
 <a class="sourceLine" id="cb21-2" data-line-number="2">GTEx_V8_TPM_boxplot <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -282,8 +298,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb21-7" data-line-number="7"></a>
 <a class="sourceLine" id="cb21-8" data-line-number="8"><span class="co"># draw the boxplot, showing the distribution among the blood samples</span></a>
 <a class="sourceLine" id="cb21-9" data-line-number="9">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Symbol)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="kw">aes</span>(<span class="dt">ymin=</span>ymin,<span class="dt">lower=</span>lower,<span class="dt">middle=</span>middle,<span class="dt">upper=</span>upper,<span class="dt">ymax=</span>ymax), <span class="dt">fill=</span><span class="st">&quot;green3&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;TPM&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_y_log10</span>() <span class="op">+</span><span class="st"> </span><span class="kw">coord_flip</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:2-boxplot"></span>
+<img src="GINI_files/figure-html/2-boxplot-1.png" alt="Boxplot of genes in the subnetwork, showing expression distribution across the whole blood samples." width="60%" />
+<p class="caption">
+FIGURE 4.4: Boxplot of genes in the subnetwork, showing expression distribution across the whole blood samples.
+</p>
+</div>
 <blockquote>
-<p><strong>Step 6. Perform phenotype enrichment analysis for genes in the subnetwork.</strong></p>
+<p><strong>Step 6. Perform phenotype enrichment analysis for genes in the subnetwork (FIGURE <a href="case-2.html#fig:2-mpo">4.5</a>).</strong></p>
 </blockquote>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="co"># define the test background (all genes expressed in the whole blood)</span></a>
 <a class="sourceLine" id="cb22-2" data-line-number="2">GTEx_V8_TPM_boxplot <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(SMTSD<span class="op">==</span><span class="st">&quot;Whole Blood&quot;</span>, ymin<span class="op">&gt;=</span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -295,6 +317,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb22-8" data-line-number="8"></a>
 <a class="sourceLine" id="cb22-9" data-line-number="9"><span class="co"># circular visualisation of enriched phenotypes within the ontology </span></a>
 <a class="sourceLine" id="cb22-10" data-line-number="10">eTerm <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">xEnrichGGraph</span>(<span class="dt">fixed=</span>F, <span class="dt">node.label.direction=</span><span class="st">&quot;leftright&quot;</span>, <span class="dt">slim=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:2-mpo"></span>
+<img src="GINI_files/figure-html/2-mpo-1.png" alt="Circular illustration of mouse phenotypes enriched in subnetwork genes. Based on mammalian phenotype ontology used for annotating mouse knockout genes." width="100%" />
+<p class="caption">
+FIGURE 4.5: Circular illustration of mouse phenotypes enriched in subnetwork genes. Based on mammalian phenotype ontology used for annotating mouse knockout genes.
+</p>
+</div>
 </div>
             </section>
 

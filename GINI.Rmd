@@ -73,7 +73,7 @@ q('no')
 ################################################
 
 ##########################
-https://23verse.github.io/gini
+https://23verse.github.io/ginix
 ##########################
 ## bookdown::render_book + bookdown::gitbook
 cd ~/Sites/SVN/github/gini
@@ -142,12 +142,19 @@ git push origin master
 
 # Overview {#index}
 
-As part of `Epistasis: Methods and Protocols`, [Methods in Molecular Biology - Springer](https://www.springer.com/series/7651), we describe three showcases analysing human genetic interactions and/or gene expression data in human tissues, compatible with the concept of tidy data science (FIGURE \@ref(fig:tidy)). All done exclusively using the R one-liner, defined as a sequential pipeline of elementary functions chained together achieving a complex task. We will guide the users through step-by-step instructions on ([Case 1]) how to identify, visualise and interpret network modules of genetic interactions; ([Case 2]) how to identify and interpret tissue-specific genetic interactions; and ([Case 3]) how to carry out genetic interaction-based tissue clustering and differential interaction analysis. All three showcases are producible on its own, achieved in relatively short runtime (~20 min for Case 1, ~15 min for Case 2, and ~25 min for Case 3). We encourage the users to to run through these showcases before analysing their own datasets.
+As part of `Epistasis: Methods and Protocols`, [Methods in Molecular Biology - Springer](https://www.springer.com/series/7651), we describe three showcases analysing human genetic interactions and/or gene expression data in human tissues ([Materials]), compatible with the concept of tidy data science (FIGURE \@ref(fig:tidy) and FIGURE \@ref(fig:liner)). All done exclusively using the R one-liner, defined as a sequential pipeline of elementary functions chained together achieving a complex task. We will guide the users through step-by-step instructions on ([Case 1]) how to identify, visualise and interpret network modules of genetic interactions; ([Case 2]) how to identify and interpret tissue-specific genetic interactions; and ([Case 3]) how to carry out genetic interaction-based tissue clustering and differential interaction analysis. All three showcases are producible on its own, achieved in relatively short runtime (~20 min for Case 1, ~15 min for Case 2, and ~25 min for Case 3). We encourage the users to run through these showcases before analysing their own datasets.
 
 ```{r tidy, fig.cap="Collection of the main packages for tidy data science, with features and key functions briefed.", fig.width=8, fig.height=4, echo=FALSE, eval=TRUE, fig.align="center",out.width="100%"}
 library(png)
 library(grid)
 img <- readPNG("booklet.GINI.tidy.png")
+grid.raster(img)
+```
+
+```{r liner, fig.cap="The one-liner. Top: illustration of data analytics one-liner, conceptually depicted as data flow through a cascade of functions, with defining characteristic as SICE (=sequential, intuitive, combinatory and elementary). Bottom: the template of the one-liner that is chained together through %>%, the pipe operator, with examples beneath achieving common tasks.", fig.width=8, fig.height=5, echo=FALSE, eval=TRUE, fig.align="center",out.width="100%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.GINI.liner.png")
 grid.raster(img)
 ```
 
@@ -201,7 +208,7 @@ GTEx_V8_TPM_boxplot
 
 We provide the step-by-step instructions on how to identify modular/community structure (`Step 2`), the essential to subsequently interpret the genetic interaction network, both visually intuitive and scientifically sound. `Steps 3-6` detail how to determine 2D coordinates of the network respecting modular structure, and how to add the hull and labelling for each of the modules, while `Steps 7-12` show how to perform pathway analysis of modules for knowledge discovery and interpretation.
 
-> **Step 1: Load the packages and import human genetic interaction data (see `Materials` above).**
+> **Step 1: Load the packages and import human genetic interaction data (see [Materials]).**
 
 ```{r, eval=F, include=TRUE}
 # load packages used in this case
@@ -423,7 +430,7 @@ grid.raster(img)
 
 We illustrate how to perform integrative analysis combining genetic interactions with gene expression data; such strategy is computationally promising given the current technological limits in experimentally generating tissue-specific interactions on a genome scale, particularly for humans. One way doing so is to trim the generic genetic interactions to node genes expressed in a specific tissue. Such trimming allows identification of a genetic interaction network in the whole blood (`Step 2`), from which a subnetwork with a desired number of interconnected genes is further identified that tend to be highly expressed (`Step 3`). We also demonstrate how to highlight the subnetwork within the parent network (`Step 4`). For the interpretation of the subnetwork identified, we illustrate how to perform phenotype enrichment analysis using mammalian phenotype ontology, a tree-like structure containing well-defined terms that are used to annotate mouse knock-out phenotypes (`Step 6`). 
 
-> **Step 1: Load the packages and import human genetic interaction data as well as gene expression data (see `Materials`).**
+> **Step 1: Load the packages and import human genetic interaction data as well as gene expression data (see [Materials]).**
 
 ```{r, eval=F, include=TRUE}
 # load packages used in this case
@@ -620,7 +627,7 @@ grid.raster(img)
 ```
 
 
-> **Step 1: Load the packages and import human genetic interaction data as well as human tissue gene expression data (see `Materials` above).**
+> **Step 1: Load the packages and import human genetic interaction data as well as human tissue gene expression data (see [Materials]).**
 
 ```{r, eval=F, include=TRUE}
 # load the packages used in this case

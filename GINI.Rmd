@@ -213,6 +213,7 @@ We provide the step-by-step instructions on how to identify modular/community st
 ```{r, eval=F, include=TRUE}
 # load packages used in this case
 library(tidyverse)
+library(igraph)
 library(dnet)
 library(XGR)
 library(ggrepel)
@@ -385,7 +386,7 @@ df_nested
 # the tibble "df_nested" unnested into a tibble "df_output"
 df_nested %>% select(modules, output) %>% unnest(output) -> df_output
 
-# print the content of the tibble "df_nested"
+# print the content of the tibble "df_output"
 df_output
 ```
 
@@ -428,13 +429,14 @@ grid.raster(img)
 
 # Case 2
 
-We illustrate how to perform integrative analysis combining genetic interactions with gene expression data; such strategy is computationally promising given the current technological limits in experimentally generating tissue-specific interactions on a genome scale, particularly for humans. One way doing so is to trim the generic genetic interactions to node genes expressed in a specific tissue. Such trimming allows identification of a genetic interaction network in the whole blood (`Step 2`), from which a subnetwork with a desired number of interconnected genes is further identified that tend to be highly expressed (`Step 3`). We also demonstrate how to highlight the subnetwork within the parent network (`Step 4`). For the interpretation of the subnetwork identified, we illustrate how to perform phenotype enrichment analysis using mammalian phenotype ontology, a tree-like structure containing well-defined terms that are used to annotate mouse knock-out phenotypes (`Step 6`). 
+We illustrate how to perform integrative analysis combining genetic interactions and gene expression data; such strategy is computationally promising given the current technological limits in experimentally generating tissue-specific interactions on a genome scale, particularly for humans. One way doing so is to trim the generic genetic interactions to node genes expressed in a specific tissue. Such trimming allows identification of a genetic interaction network in the whole blood (`Step 2`), from which a subnetwork with a desired number of interconnected genes is further identified that tend to be highly expressed (`Step 3`). We also demonstrate how to highlight the subnetwork within the parent network (`Step 4`). For the interpretation of the subnetwork identified, we illustrate how to perform phenotype enrichment analysis using mammalian phenotype ontology, a tree-like structure containing well-defined terms that are used to annotate mouse knock-out phenotypes (`Step 6`). 
 
 > **Step 1: Load the packages and import human genetic interaction data as well as gene expression data (see [Materials]).**
 
 ```{r, eval=F, include=TRUE}
 # load packages used in this case
 library(tidyverse)
+library(igraph)
 library(XGR)
 library(ggrepel)
 
@@ -443,9 +445,9 @@ library(osfr)
 guid <- "gskpn"
 
 # import genetic interaction data
-# converted into two tibbles "vertices" and "edges"
+# converted into two tibbles "nodes" and "edges"
 ig.BioGRID_genetic <- xRDataLoader("ig.BioGRID_genetic", guid=guid)
-ig.BioGRID_genetic %>% igraph::as_data_frame("vertices") %>% as_tibble() -> vertices
+ig.BioGRID_genetic %>% igraph::as_data_frame("vertices") %>% as_tibble() -> nodes
 ig.BioGRID_genetic %>% igraph::as_data_frame("edges") %>% as_tibble() -> edges
 
 # import gene expression data
@@ -462,11 +464,11 @@ GTEx_V8_TPM_boxplot %>% filter(SMTSD=="Whole Blood", ymin>=1) %>%
 select(Symbol,middle) -> df_blood
 
 # trim the genetic interactions to node genes expressed
-# return two data frames "nodes" and "links"
+# return two data frames "vertices" and "links"
 # return an igraph object "ig_blood"
 edges %>% semi_join(df_blood, by=c("from"="Symbol")) %>% 
 semi_join(df_blood, by=c("to"="Symbol")) %>% as.data.frame() -> links
-vertices %>% inner_join(df_blood, by=c("name"="Symbol")) %>% 
+nodes %>% inner_join(df_blood, by=c("name"="Symbol")) %>% 
 rename(TPM=middle) %>% as.data.frame() -> vertices
 ig_blood <- igraph::graph_from_data_frame(d=links, directed=F, vertices=vertices)
 
@@ -542,7 +544,7 @@ grid.raster(img)
 ```{r, echo=TRUE}
 # the "ig_blood" (the parent network) marked by the "ig_subg" (the subnetwork)
 # return an igraph object "ig_blood2", the same as "ig_blood"
-# but appended with a node attribute ("mark") and edge attribute ("mark") 
+# but appended with a node attribute ("mark") and an edge attribute ("mark") 
 ig_blood2 <- xMarkNet(ig_blood, ig_subg)
 
 # the object "ig_blood2" appended with two node attributes "xcoord" and "ycoord" 
@@ -554,7 +556,7 @@ ig_blood2 %>% xLayout("gplot.layout.fruchtermanreingold") -> ig_blood2
 E(ig_blood2)$color <- ifelse(E(ig_blood2)$mark==0, "lightblue1", "darkgreen")
 E(ig_blood2)$color.alpha <- ifelse(E(ig_blood2)$mark==0, 0.3, 0.9)
 
-# visualise the network highlighted by the subnetwork
+# visualise the parent network highlighted by the subnetwork
 # nodes placed by coordinates
 # nodes sized by degree
 # nodes colored differently, thus, being highlighted
@@ -632,6 +634,7 @@ grid.raster(img)
 ```{r, eval=F, include=TRUE}
 # load the packages used in this case
 library(tidyverse)
+library(igraph)
 library(XGR)
 library(ggrepel)
 library(magrittr)
@@ -646,9 +649,9 @@ library(osfr)
 guid <- "gskpn"
 
 # import genetic interaction data
-# converted into two tibbles "vertices" and "edges"
+# converted into two tibbles "nodes" and "edges"
 ig.BioGRID_genetic <- xRDataLoader("ig.BioGRID_genetic", guid=guid)
-ig.BioGRID_genetic %>% igraph::as_data_frame("vertices") %>% as_tibble() -> vertices
+ig.BioGRID_genetic %>% igraph::as_data_frame("vertices") %>% as_tibble() -> nodes
 ig.BioGRID_genetic %>% igraph::as_data_frame("edges") %>% as_tibble() -> edges
 
 # import gene expression data
@@ -824,7 +827,7 @@ select(from,to,estimate) %>% as.data.frame -> edges_ab
 # extract nodes with adjp < 0.01
 df_results %>% filter(estimate>0, adjp<0.01) %>%
 separate_rows(gene, sep="<->") %>% distinct(gene) %>% rename(name=gene) %>%
-inner_join(vertices, by="name") %>% as.data.frame() -> nodes_ab
+inner_join(nodes, by="name") %>% as.data.frame() -> nodes_ab
 
 # construct the network 
 # return an igraph object "ig_ab"
@@ -846,8 +849,8 @@ ifelse(V(ig_ab)$degree>=2, V(ig_ab)$name, "") -> V(ig_ab)$label
 # nodes placed by coordinates on the plane
 # nodes sized by degree
 # return a ggplot object "gg_ab"
-ig_ab %>% xGGnetwork(node.label="label", node.label.size=1.5, node.xcoord="xcoord", node.ycoord="ycoord", node.size="degree", node.size.range=c(0.5,4), edge.color="lightblue", edge.arrow.gap=0) + guides(size="none") -> gg_up
-gg_up
+ig_ab %>% xGGnetwork(node.label="label", node.label.size=1.5, node.xcoord="xcoord", node.ycoord="ycoord", node.size="degree", node.size.range=c(0.5,4), edge.color="lightblue", edge.arrow.gap=0) + guides(size="none") -> gg_ab
+gg_ab
 ```
 
 ```{r 3-network, fig.cap="Network visualisation of interactions abundant in cluster 5. Nodes sized by degree (i.e. the number of neighbors), and if having two or more neighbors, also labelled.", fig.width=8, fig.height=7, echo=FALSE, eval=TRUE, fig.align="center",out.width="80%"}

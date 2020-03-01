@@ -162,20 +162,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </blockquote>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># load packages used in this case</span></a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw">library</span>(dnet)</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="kw">library</span>(XGR)</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="kw">library</span>(ggrepel)</a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co"># also load the package &quot;osfr&quot; aided in importing data from https://osf.io/gskpn</span></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="kw">library</span>(osfr)</a>
-<a class="sourceLine" id="cb5-9" data-line-number="9">guid &lt;-<span class="st"> &quot;gskpn&quot;</span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co"># import the genetic interaction network data</span></a>
-<a class="sourceLine" id="cb5-12" data-line-number="12">ig.BioGRID_genetic &lt;-<span class="st"> </span><span class="kw">xRDataLoader</span>(<span class="st">&quot;ig.BioGRID_genetic&quot;</span>, <span class="dt">guid=</span>guid)</a>
-<a class="sourceLine" id="cb5-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co"># keep the largest interconnected component</span></a>
-<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co"># return an igraph object called &quot;ig&quot;</span></a>
-<a class="sourceLine" id="cb5-16" data-line-number="16">ig.BioGRID_genetic <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">dNetInduce</span>(<span class="dt">nodes_query=</span><span class="kw">V</span>(ig.BioGRID_genetic)<span class="op">$</span>name) -&gt;<span class="st"> </span>ig</a></code></pre></div>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw">library</span>(igraph)</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="kw">library</span>(dnet)</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="kw">library</span>(XGR)</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="kw">library</span>(ggrepel)</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co"># also load the package &quot;osfr&quot; aided in importing data from https://osf.io/gskpn</span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="kw">library</span>(osfr)</a>
+<a class="sourceLine" id="cb5-10" data-line-number="10">guid &lt;-<span class="st"> &quot;gskpn&quot;</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co"># import the genetic interaction network data</span></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13">ig.BioGRID_genetic &lt;-<span class="st"> </span><span class="kw">xRDataLoader</span>(<span class="st">&quot;ig.BioGRID_genetic&quot;</span>, <span class="dt">guid=</span>guid)</a>
+<a class="sourceLine" id="cb5-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co"># keep the largest interconnected component</span></a>
+<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co"># return an igraph object called &quot;ig&quot;</span></a>
+<a class="sourceLine" id="cb5-17" data-line-number="17">ig.BioGRID_genetic <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">dNetInduce</span>(<span class="dt">nodes_query=</span><span class="kw">V</span>(ig.BioGRID_genetic)<span class="op">$</span>name) -&gt;<span class="st"> </span>ig</a></code></pre></div>
 <blockquote>
 <p><strong>Step 2: Identify modular structure using the multi-level modularity optimisation algorithm.</strong></p>
 </blockquote>
@@ -312,7 +313,7 @@ FIGURE 3.3: Pathway analysis of network modules. Top: a tibble designed to captu
 <a class="sourceLine" id="cb14-8" data-line-number="8"><span class="co"># the tibble &quot;df_nested&quot; unnested into a tibble &quot;df_output&quot;</span></a>
 <a class="sourceLine" id="cb14-9" data-line-number="9">df_nested <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(modules, output) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unnest</span>(output) -&gt;<span class="st"> </span>df_output</a>
 <a class="sourceLine" id="cb14-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="co"># print the content of the tibble &quot;df_nested&quot;</span></a>
+<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="co"># print the content of the tibble &quot;df_output&quot;</span></a>
 <a class="sourceLine" id="cb14-12" data-line-number="12">df_output</a></code></pre></div>
 <blockquote>
 <p><strong>Step 11. Output enrichment results into a file <code>output.txt</code>.</strong></p>

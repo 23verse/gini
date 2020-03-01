@@ -168,27 +168,28 @@ FIGURE 5.1: Schematic illustration of tissue clustering and differential analysi
 </blockquote>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="co"># load the packages used in this case</span></a>
 <a class="sourceLine" id="cb23-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="kw">library</span>(XGR)</a>
-<a class="sourceLine" id="cb23-4" data-line-number="4"><span class="kw">library</span>(ggrepel)</a>
-<a class="sourceLine" id="cb23-5" data-line-number="5"><span class="kw">library</span>(magrittr)</a>
-<a class="sourceLine" id="cb23-6" data-line-number="6"><span class="kw">library</span>(broom)</a>
-<a class="sourceLine" id="cb23-7" data-line-number="7"><span class="kw">library</span>(limma)</a>
-<a class="sourceLine" id="cb23-8" data-line-number="8"><span class="kw">library</span>(biobroom)</a>
-<a class="sourceLine" id="cb23-9" data-line-number="9"><span class="kw">library</span>(patchwork)</a>
-<a class="sourceLine" id="cb23-10" data-line-number="10"><span class="kw">library</span>(gridExtra)</a>
-<a class="sourceLine" id="cb23-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb23-12" data-line-number="12"><span class="co"># also load the package &quot;osfr&quot; aided in importing data from https://osf.io/gskpn</span></a>
-<a class="sourceLine" id="cb23-13" data-line-number="13"><span class="kw">library</span>(osfr)</a>
-<a class="sourceLine" id="cb23-14" data-line-number="14">guid &lt;-<span class="st"> &quot;gskpn&quot;</span></a>
-<a class="sourceLine" id="cb23-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb23-16" data-line-number="16"><span class="co"># import genetic interaction data</span></a>
-<a class="sourceLine" id="cb23-17" data-line-number="17"><span class="co"># converted into two tibbles &quot;vertices&quot; and &quot;edges&quot;</span></a>
-<a class="sourceLine" id="cb23-18" data-line-number="18">ig.BioGRID_genetic &lt;-<span class="st"> </span><span class="kw">xRDataLoader</span>(<span class="st">&quot;ig.BioGRID_genetic&quot;</span>, <span class="dt">guid=</span>guid)</a>
-<a class="sourceLine" id="cb23-19" data-line-number="19">ig.BioGRID_genetic <span class="op">%&gt;%</span><span class="st"> </span>igraph<span class="op">::</span><span class="kw">as_data_frame</span>(<span class="st">&quot;vertices&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>() -&gt;<span class="st"> </span>vertices</a>
-<a class="sourceLine" id="cb23-20" data-line-number="20">ig.BioGRID_genetic <span class="op">%&gt;%</span><span class="st"> </span>igraph<span class="op">::</span><span class="kw">as_data_frame</span>(<span class="st">&quot;edges&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>() -&gt;<span class="st"> </span>edges</a>
-<a class="sourceLine" id="cb23-21" data-line-number="21"></a>
-<a class="sourceLine" id="cb23-22" data-line-number="22"><span class="co"># import gene expression data</span></a>
-<a class="sourceLine" id="cb23-23" data-line-number="23">GTEx_V8_TPM_boxplot &lt;-<span class="st"> </span><span class="kw">xRDataLoader</span>(<span class="st">&quot;GTEx_V8_TPM_boxplot&quot;</span>, <span class="dt">guid=</span>guid)</a></code></pre></div>
+<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="kw">library</span>(igraph)</a>
+<a class="sourceLine" id="cb23-4" data-line-number="4"><span class="kw">library</span>(XGR)</a>
+<a class="sourceLine" id="cb23-5" data-line-number="5"><span class="kw">library</span>(ggrepel)</a>
+<a class="sourceLine" id="cb23-6" data-line-number="6"><span class="kw">library</span>(magrittr)</a>
+<a class="sourceLine" id="cb23-7" data-line-number="7"><span class="kw">library</span>(broom)</a>
+<a class="sourceLine" id="cb23-8" data-line-number="8"><span class="kw">library</span>(limma)</a>
+<a class="sourceLine" id="cb23-9" data-line-number="9"><span class="kw">library</span>(biobroom)</a>
+<a class="sourceLine" id="cb23-10" data-line-number="10"><span class="kw">library</span>(patchwork)</a>
+<a class="sourceLine" id="cb23-11" data-line-number="11"><span class="kw">library</span>(gridExtra)</a>
+<a class="sourceLine" id="cb23-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb23-13" data-line-number="13"><span class="co"># also load the package &quot;osfr&quot; aided in importing data from https://osf.io/gskpn</span></a>
+<a class="sourceLine" id="cb23-14" data-line-number="14"><span class="kw">library</span>(osfr)</a>
+<a class="sourceLine" id="cb23-15" data-line-number="15">guid &lt;-<span class="st"> &quot;gskpn&quot;</span></a>
+<a class="sourceLine" id="cb23-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb23-17" data-line-number="17"><span class="co"># import genetic interaction data</span></a>
+<a class="sourceLine" id="cb23-18" data-line-number="18"><span class="co"># converted into two tibbles &quot;nodes&quot; and &quot;edges&quot;</span></a>
+<a class="sourceLine" id="cb23-19" data-line-number="19">ig.BioGRID_genetic &lt;-<span class="st"> </span><span class="kw">xRDataLoader</span>(<span class="st">&quot;ig.BioGRID_genetic&quot;</span>, <span class="dt">guid=</span>guid)</a>
+<a class="sourceLine" id="cb23-20" data-line-number="20">ig.BioGRID_genetic <span class="op">%&gt;%</span><span class="st"> </span>igraph<span class="op">::</span><span class="kw">as_data_frame</span>(<span class="st">&quot;vertices&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>() -&gt;<span class="st"> </span>nodes</a>
+<a class="sourceLine" id="cb23-21" data-line-number="21">ig.BioGRID_genetic <span class="op">%&gt;%</span><span class="st"> </span>igraph<span class="op">::</span><span class="kw">as_data_frame</span>(<span class="st">&quot;edges&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>() -&gt;<span class="st"> </span>edges</a>
+<a class="sourceLine" id="cb23-22" data-line-number="22"></a>
+<a class="sourceLine" id="cb23-23" data-line-number="23"><span class="co"># import gene expression data</span></a>
+<a class="sourceLine" id="cb23-24" data-line-number="24">GTEx_V8_TPM_boxplot &lt;-<span class="st"> </span><span class="kw">xRDataLoader</span>(<span class="st">&quot;GTEx_V8_TPM_boxplot&quot;</span>, <span class="dt">guid=</span>guid)</a></code></pre></div>
 <blockquote>
 <p><strong>Step 2. Estimate tissue-specific interaction weights.</strong></p>
 </blockquote>
@@ -335,7 +336,7 @@ FIGURE 5.5: Volcano plot showing differential interactions. Colored by empirical
 <a class="sourceLine" id="cb32-6" data-line-number="6"><span class="co"># extract nodes with adjp &lt; 0.01</span></a>
 <a class="sourceLine" id="cb32-7" data-line-number="7">df_results <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(estimate<span class="op">&gt;</span><span class="dv">0</span>, adjp<span class="op">&lt;</span><span class="fl">0.01</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb32-8" data-line-number="8"><span class="kw">separate_rows</span>(gene, <span class="dt">sep=</span><span class="st">&quot;&lt;-&gt;&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>(gene) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">name=</span>gene) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb32-9" data-line-number="9"><span class="kw">inner_join</span>(vertices, <span class="dt">by=</span><span class="st">&quot;name&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>() -&gt;<span class="st"> </span>nodes_ab</a>
+<a class="sourceLine" id="cb32-9" data-line-number="9"><span class="kw">inner_join</span>(nodes, <span class="dt">by=</span><span class="st">&quot;name&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>() -&gt;<span class="st"> </span>nodes_ab</a>
 <a class="sourceLine" id="cb32-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb32-11" data-line-number="11"><span class="co"># construct the network </span></a>
 <a class="sourceLine" id="cb32-12" data-line-number="12"><span class="co"># return an igraph object &quot;ig_ab&quot;</span></a>
@@ -357,8 +358,8 @@ FIGURE 5.5: Volcano plot showing differential interactions. Colored by empirical
 <a class="sourceLine" id="cb32-28" data-line-number="28"><span class="co"># nodes placed by coordinates on the plane</span></a>
 <a class="sourceLine" id="cb32-29" data-line-number="29"><span class="co"># nodes sized by degree</span></a>
 <a class="sourceLine" id="cb32-30" data-line-number="30"><span class="co"># return a ggplot object &quot;gg_ab&quot;</span></a>
-<a class="sourceLine" id="cb32-31" data-line-number="31">ig_ab <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">xGGnetwork</span>(<span class="dt">node.label=</span><span class="st">&quot;label&quot;</span>, <span class="dt">node.label.size=</span><span class="fl">1.5</span>, <span class="dt">node.xcoord=</span><span class="st">&quot;xcoord&quot;</span>, <span class="dt">node.ycoord=</span><span class="st">&quot;ycoord&quot;</span>, <span class="dt">node.size=</span><span class="st">&quot;degree&quot;</span>, <span class="dt">node.size.range=</span><span class="kw">c</span>(<span class="fl">0.5</span>,<span class="dv">4</span>), <span class="dt">edge.color=</span><span class="st">&quot;lightblue&quot;</span>, <span class="dt">edge.arrow.gap=</span><span class="dv">0</span>) <span class="op">+</span><span class="st"> </span><span class="kw">guides</span>(<span class="dt">size=</span><span class="st">&quot;none&quot;</span>) -&gt;<span class="st"> </span>gg_up</a>
-<a class="sourceLine" id="cb32-32" data-line-number="32">gg_up</a></code></pre></div>
+<a class="sourceLine" id="cb32-31" data-line-number="31">ig_ab <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">xGGnetwork</span>(<span class="dt">node.label=</span><span class="st">&quot;label&quot;</span>, <span class="dt">node.label.size=</span><span class="fl">1.5</span>, <span class="dt">node.xcoord=</span><span class="st">&quot;xcoord&quot;</span>, <span class="dt">node.ycoord=</span><span class="st">&quot;ycoord&quot;</span>, <span class="dt">node.size=</span><span class="st">&quot;degree&quot;</span>, <span class="dt">node.size.range=</span><span class="kw">c</span>(<span class="fl">0.5</span>,<span class="dv">4</span>), <span class="dt">edge.color=</span><span class="st">&quot;lightblue&quot;</span>, <span class="dt">edge.arrow.gap=</span><span class="dv">0</span>) <span class="op">+</span><span class="st"> </span><span class="kw">guides</span>(<span class="dt">size=</span><span class="st">&quot;none&quot;</span>) -&gt;<span class="st"> </span>gg_ab</a>
+<a class="sourceLine" id="cb32-32" data-line-number="32">gg_ab</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:3-network"></span>
 <img src="GINI_files/figure-html/3-network-1.png" alt="Network visualisation of interactions abundant in cluster 5. Nodes sized by degree (i.e. the number of neighbors), and if having two or more neighbors, also labelled." width="80%" />
 <p class="caption">

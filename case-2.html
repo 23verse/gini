@@ -156,27 +156,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="case-2" class="section level1">
 <h1><span class="header-section-number">Section 4</span> Case 2</h1>
-<p>We illustrate how to perform integrative analysis combining genetic interactions with gene expression data; such strategy is computationally promising given the current technological limits in experimentally generating tissue-specific interactions on a genome scale, particularly for humans. One way doing so is to trim the generic genetic interactions to node genes expressed in a specific tissue. Such trimming allows identification of a genetic interaction network in the whole blood (<code>Step 2</code>), from which a subnetwork with a desired number of interconnected genes is further identified that tend to be highly expressed (<code>Step 3</code>). We also demonstrate how to highlight the subnetwork within the parent network (<code>Step 4</code>). For the interpretation of the subnetwork identified, we illustrate how to perform phenotype enrichment analysis using mammalian phenotype ontology, a tree-like structure containing well-defined terms that are used to annotate mouse knock-out phenotypes (<code>Step 6</code>).</p>
+<p>We illustrate how to perform integrative analysis combining genetic interactions and gene expression data; such strategy is computationally promising given the current technological limits in experimentally generating tissue-specific interactions on a genome scale, particularly for humans. One way doing so is to trim the generic genetic interactions to node genes expressed in a specific tissue. Such trimming allows identification of a genetic interaction network in the whole blood (<code>Step 2</code>), from which a subnetwork with a desired number of interconnected genes is further identified that tend to be highly expressed (<code>Step 3</code>). We also demonstrate how to highlight the subnetwork within the parent network (<code>Step 4</code>). For the interpretation of the subnetwork identified, we illustrate how to perform phenotype enrichment analysis using mammalian phenotype ontology, a tree-like structure containing well-defined terms that are used to annotate mouse knock-out phenotypes (<code>Step 6</code>).</p>
 <blockquote>
 <p><strong>Step 1: Load the packages and import human genetic interaction data as well as gene expression data (see <a href="materials.html#materials">Materials</a>).</strong></p>
 </blockquote>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="co"># load packages used in this case</span></a>
 <a class="sourceLine" id="cb17-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="kw">library</span>(XGR)</a>
-<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="kw">library</span>(ggrepel)</a>
-<a class="sourceLine" id="cb17-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="co"># also load the package &quot;osfr&quot; aided in importing data from https://osf.io/gskpn</span></a>
-<a class="sourceLine" id="cb17-7" data-line-number="7"><span class="kw">library</span>(osfr)</a>
-<a class="sourceLine" id="cb17-8" data-line-number="8">guid &lt;-<span class="st"> &quot;gskpn&quot;</span></a>
-<a class="sourceLine" id="cb17-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb17-10" data-line-number="10"><span class="co"># import genetic interaction data</span></a>
-<a class="sourceLine" id="cb17-11" data-line-number="11"><span class="co"># converted into two tibbles &quot;vertices&quot; and &quot;edges&quot;</span></a>
-<a class="sourceLine" id="cb17-12" data-line-number="12">ig.BioGRID_genetic &lt;-<span class="st"> </span><span class="kw">xRDataLoader</span>(<span class="st">&quot;ig.BioGRID_genetic&quot;</span>, <span class="dt">guid=</span>guid)</a>
-<a class="sourceLine" id="cb17-13" data-line-number="13">ig.BioGRID_genetic <span class="op">%&gt;%</span><span class="st"> </span>igraph<span class="op">::</span><span class="kw">as_data_frame</span>(<span class="st">&quot;vertices&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>() -&gt;<span class="st"> </span>vertices</a>
-<a class="sourceLine" id="cb17-14" data-line-number="14">ig.BioGRID_genetic <span class="op">%&gt;%</span><span class="st"> </span>igraph<span class="op">::</span><span class="kw">as_data_frame</span>(<span class="st">&quot;edges&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>() -&gt;<span class="st"> </span>edges</a>
-<a class="sourceLine" id="cb17-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb17-16" data-line-number="16"><span class="co"># import gene expression data</span></a>
-<a class="sourceLine" id="cb17-17" data-line-number="17">GTEx_V8_TPM_boxplot &lt;-<span class="st"> </span><span class="kw">xRDataLoader</span>(<span class="st">&quot;GTEx_V8_TPM_boxplot&quot;</span>, <span class="dt">guid=</span>guid)</a></code></pre></div>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="kw">library</span>(igraph)</a>
+<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="kw">library</span>(XGR)</a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="kw">library</span>(ggrepel)</a>
+<a class="sourceLine" id="cb17-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb17-7" data-line-number="7"><span class="co"># also load the package &quot;osfr&quot; aided in importing data from https://osf.io/gskpn</span></a>
+<a class="sourceLine" id="cb17-8" data-line-number="8"><span class="kw">library</span>(osfr)</a>
+<a class="sourceLine" id="cb17-9" data-line-number="9">guid &lt;-<span class="st"> &quot;gskpn&quot;</span></a>
+<a class="sourceLine" id="cb17-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb17-11" data-line-number="11"><span class="co"># import genetic interaction data</span></a>
+<a class="sourceLine" id="cb17-12" data-line-number="12"><span class="co"># converted into two tibbles &quot;nodes&quot; and &quot;edges&quot;</span></a>
+<a class="sourceLine" id="cb17-13" data-line-number="13">ig.BioGRID_genetic &lt;-<span class="st"> </span><span class="kw">xRDataLoader</span>(<span class="st">&quot;ig.BioGRID_genetic&quot;</span>, <span class="dt">guid=</span>guid)</a>
+<a class="sourceLine" id="cb17-14" data-line-number="14">ig.BioGRID_genetic <span class="op">%&gt;%</span><span class="st"> </span>igraph<span class="op">::</span><span class="kw">as_data_frame</span>(<span class="st">&quot;vertices&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>() -&gt;<span class="st"> </span>nodes</a>
+<a class="sourceLine" id="cb17-15" data-line-number="15">ig.BioGRID_genetic <span class="op">%&gt;%</span><span class="st"> </span>igraph<span class="op">::</span><span class="kw">as_data_frame</span>(<span class="st">&quot;edges&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>() -&gt;<span class="st"> </span>edges</a>
+<a class="sourceLine" id="cb17-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb17-17" data-line-number="17"><span class="co"># import gene expression data</span></a>
+<a class="sourceLine" id="cb17-18" data-line-number="18">GTEx_V8_TPM_boxplot &lt;-<span class="st"> </span><span class="kw">xRDataLoader</span>(<span class="st">&quot;GTEx_V8_TPM_boxplot&quot;</span>, <span class="dt">guid=</span>guid)</a></code></pre></div>
 <blockquote>
 <p><strong>Step 2. Identify a genetic interaction network in the whole blood (FIGURE <a href="case-2.html#fig:2-parent">4.1</a>).</strong></p>
 </blockquote>
@@ -187,11 +188,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb18-5" data-line-number="5"><span class="kw">select</span>(Symbol,middle) -&gt;<span class="st"> </span>df_blood</a>
 <a class="sourceLine" id="cb18-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb18-7" data-line-number="7"><span class="co"># trim the genetic interactions to node genes expressed</span></a>
-<a class="sourceLine" id="cb18-8" data-line-number="8"><span class="co"># return two data frames &quot;nodes&quot; and &quot;links&quot;</span></a>
+<a class="sourceLine" id="cb18-8" data-line-number="8"><span class="co"># return two data frames &quot;vertices&quot; and &quot;links&quot;</span></a>
 <a class="sourceLine" id="cb18-9" data-line-number="9"><span class="co"># return an igraph object &quot;ig_blood&quot;</span></a>
 <a class="sourceLine" id="cb18-10" data-line-number="10">edges <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">semi_join</span>(df_blood, <span class="dt">by=</span><span class="kw">c</span>(<span class="st">&quot;from&quot;</span>=<span class="st">&quot;Symbol&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb18-11" data-line-number="11"><span class="kw">semi_join</span>(df_blood, <span class="dt">by=</span><span class="kw">c</span>(<span class="st">&quot;to&quot;</span>=<span class="st">&quot;Symbol&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>() -&gt;<span class="st"> </span>links</a>
-<a class="sourceLine" id="cb18-12" data-line-number="12">vertices <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">inner_join</span>(df_blood, <span class="dt">by=</span><span class="kw">c</span>(<span class="st">&quot;name&quot;</span>=<span class="st">&quot;Symbol&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb18-12" data-line-number="12">nodes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">inner_join</span>(df_blood, <span class="dt">by=</span><span class="kw">c</span>(<span class="st">&quot;name&quot;</span>=<span class="st">&quot;Symbol&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb18-13" data-line-number="13"><span class="kw">rename</span>(<span class="dt">TPM=</span>middle) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>() -&gt;<span class="st"> </span>vertices</a>
 <a class="sourceLine" id="cb18-14" data-line-number="14">ig_blood &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">graph_from_data_frame</span>(<span class="dt">d=</span>links, <span class="dt">directed=</span>F, <span class="dt">vertices=</span>vertices)</a>
 <a class="sourceLine" id="cb18-15" data-line-number="15"></a>
@@ -259,7 +260,7 @@ FIGURE 4.2: Illustration of a subnetwork identified from the parent network, ens
 </blockquote>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="co"># the &quot;ig_blood&quot; (the parent network) marked by the &quot;ig_subg&quot; (the subnetwork)</span></a>
 <a class="sourceLine" id="cb20-2" data-line-number="2"><span class="co"># return an igraph object &quot;ig_blood2&quot;, the same as &quot;ig_blood&quot;</span></a>
-<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="co"># but appended with a node attribute (&quot;mark&quot;) and edge attribute (&quot;mark&quot;) </span></a>
+<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="co"># but appended with a node attribute (&quot;mark&quot;) and an edge attribute (&quot;mark&quot;) </span></a>
 <a class="sourceLine" id="cb20-4" data-line-number="4">ig_blood2 &lt;-<span class="st"> </span><span class="kw">xMarkNet</span>(ig_blood, ig_subg)</a>
 <a class="sourceLine" id="cb20-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb20-6" data-line-number="6"><span class="co"># the object &quot;ig_blood2&quot; appended with two node attributes &quot;xcoord&quot; and &quot;ycoord&quot; </span></a>
@@ -271,7 +272,7 @@ FIGURE 4.2: Illustration of a subnetwork identified from the parent network, ens
 <a class="sourceLine" id="cb20-12" data-line-number="12"><span class="kw">E</span>(ig_blood2)<span class="op">$</span>color &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">E</span>(ig_blood2)<span class="op">$</span>mark<span class="op">==</span><span class="dv">0</span>, <span class="st">&quot;lightblue1&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>)</a>
 <a class="sourceLine" id="cb20-13" data-line-number="13"><span class="kw">E</span>(ig_blood2)<span class="op">$</span>color.alpha &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">E</span>(ig_blood2)<span class="op">$</span>mark<span class="op">==</span><span class="dv">0</span>, <span class="fl">0.3</span>, <span class="fl">0.9</span>)</a>
 <a class="sourceLine" id="cb20-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb20-15" data-line-number="15"><span class="co"># visualise the network highlighted by the subnetwork</span></a>
+<a class="sourceLine" id="cb20-15" data-line-number="15"><span class="co"># visualise the parent network highlighted by the subnetwork</span></a>
 <a class="sourceLine" id="cb20-16" data-line-number="16"><span class="co"># nodes placed by coordinates</span></a>
 <a class="sourceLine" id="cb20-17" data-line-number="17"><span class="co"># nodes sized by degree</span></a>
 <a class="sourceLine" id="cb20-18" data-line-number="18"><span class="co"># nodes colored differently, thus, being highlighted</span></a>

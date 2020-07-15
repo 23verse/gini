@@ -142,7 +142,7 @@ git push origin master
 
 # Overview {#index}
 
-As part of `Epistasis: Methods and Protocols`, [Methods in Molecular Biology - Springer](https://www.springer.com/series/7651), we describe three showcases analysing human genetic interactions and/or gene expression data in human tissues ([Materials]), compatible with the concept of tidy data science (FIGURE \@ref(fig:tidy) and FIGURE \@ref(fig:liner)). All done exclusively using the R one-liner, defined as a sequential pipeline of elementary functions chained together achieving a complex task. We will guide the users through step-by-step instructions on ([Case 1]) how to identify, visualise and interpret network modules of genetic interactions; ([Case 2]) how to identify and interpret tissue-specific genetic interactions; and ([Case 3]) how to carry out genetic interaction-based tissue clustering and differential interaction analysis. All three showcases are producible on its own, achieved in relatively short runtime (~20 min for Case 1, ~15 min for Case 2, and ~25 min for Case 3). We encourage the users to run through these showcases before analysing their own datasets.
+As part of `Epistasis: Methods and Protocols`, [Methods in Molecular Biology - Springer](https://www.springer.com/gp/book/9781071609460), we describe three showcases analysing human genetic interactions and/or gene expression data in human tissues ([Materials]), compatible with the concept of tidy data science (FIGURE \@ref(fig:tidy) and FIGURE \@ref(fig:liner)). All done exclusively using the R one-liner, defined as a sequential pipeline of elementary functions chained together achieving a complex task. We will guide the users through step-by-step instructions on ([Case 1]) how to identify, visualise and interpret network modules of genetic interactions; ([Case 2]) how to identify and interpret tissue-specific genetic interactions; and ([Case 3]) how to carry out genetic interaction-based tissue clustering and differential interaction analysis. All three showcases are producible on its own, achieved in relatively short runtime (~20 min for Case 1, ~15 min for Case 2, and ~25 min for Case 3). We encourage the users to run through these showcases before analysing their own datasets.
 
 ```{r tidy, fig.cap="Collection of the main packages for tidy data science, with features and key functions briefed.", fig.width=8, fig.height=4, echo=FALSE, eval=TRUE, fig.align="center",out.width="100%"}
 library(png)
@@ -182,10 +182,10 @@ We highly recommend using a dedicated package `BiocManager` to install and updat
 install.packages("BiocManager")
 
 # then install packages from Bioconductor and CRAN
-BiocManager::install(c("biobroom","dnet","ggrepel","gridExtra","limma","patchwork","remotes","tidyverse","XGR"), dependencies=T)
+BiocManager::install(c("biobroom","dnet","ggrepel","gridExtra","limma","patchwork","remotes","tidyverse","osfr"), dependencies=T)
 
 # can also install packages from GitHub
-BiocManager::install("centerforopenscience/osfr")
+BiocManager::install("hfang-bristol/XGR")
 ```
 
 > **Genetic interactions**
